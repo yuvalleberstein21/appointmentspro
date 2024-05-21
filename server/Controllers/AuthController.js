@@ -17,7 +17,7 @@ const login = async (req, res) => {
             token: generateToken(user._id),
         });
     } else {
-        return res.status(401).send({ message: 'Invalid phone number or password' });
+        return res.status(401).send({ message: 'מספר פלאפון או סיסמא שגויים' });
     }
 };
 

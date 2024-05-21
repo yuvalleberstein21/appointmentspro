@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require("dotenv");
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const connectDatabase = require('./config/MongoDB');
 const authRoutes = require('./Routes/AuthRoutes');
 
@@ -9,6 +10,20 @@ connectDatabase();
 
 const app = express();
 app.use(bodyParser.json());
+
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
+app.use((err, req, res, next) => {
+    if (err.message === 'Not allowed by CORS') {
+        res.status(403).json({ error: 'Not allowed by CORS' });
+    } else {
+        next(err);
+    }
+});
 
 
 // Routes
