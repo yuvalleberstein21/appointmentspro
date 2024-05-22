@@ -4,7 +4,7 @@ const Header = () => {
   const userLogin = useSelector((state: any) => state.userLogin);
   const { userInfo } = userLogin;
   return (
-    <nav className="bg-cyan-950 fixed w-full z-20 top-0 start-0">
+    <nav className="bg-cyan-950 w-full z-20 top-0 start-0">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a
           href="https://flowbite.com/"
@@ -25,7 +25,7 @@ const Header = () => {
             className="block text-white rounded md:bg-transparent  md:p-1 mr-4"
             aria-current="page"
           >
-            שלום {userInfo.name}
+            {userInfo ? `שלום ${userInfo.name}` : 'שלום אורח'}
           </span>
           <button
             type="button"

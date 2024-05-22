@@ -27,7 +27,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
       const action = login(phoneNumber, password);
       await dispatch(action);
       if (userInfo) {
-        toast.success('!התחברת בהצלחה');
         navigate('/home');
       }
     } catch (error: any) {
@@ -64,6 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
               סיסמא
             </label>
             <input
+              dir="ltr"
               autoComplete="off"
               id="password"
               name="password"

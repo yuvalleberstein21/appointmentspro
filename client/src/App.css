@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&family=Varela+Round&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -7,11 +9,23 @@
 html,
 body {
   height: 100%;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
   line-height: 1.6;
+}
+
+.card-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-title h1 {
+  font-size: 26px;
 }
 
 .loading-state {
