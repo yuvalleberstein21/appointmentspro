@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../Redux/Actions/AuthAction';
 import { User } from '../../Helpers/AuthType';
 import Loading from '../../Utils/Loading';
@@ -19,6 +19,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,8 +27,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
       const action = login(phoneNumber, password);
       await dispatch(action);
       if (userInfo) {
-        toast.success('Login successful!');
-        // navigate('/homepage');
+        toast.success('!התחברת בהצלחה');
+        navigate('/home');
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -35,17 +36,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto" dir="rtl">
       <GlobalToast />
       <div className="flex justify-center">
-        <h1 className="text-2xl font-semibold">LOGIN</h1>
+        <h1 className="text-2xl font-semibold">התחברות</h1>
       </div>
       {loading && <Loading />}
+
       <div className="divide-y divide-gray-200 p-6">
         <div className="py-8 text-base leading-6 space-y-5 text-gray-700 sm:text-lg sm:leading-7">
           <div className="relative">
             <label htmlFor="phoneNumber" className="text-sm">
-              Phone number
+              מספר פלאפון
             </label>
             <input
               autoComplete="off"
@@ -59,7 +61,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
           </div>
           <div className="relative">
             <label htmlFor="password" className="text-sm">
-              Password
+              סיסמא
             </label>
             <input
               autoComplete="off"
@@ -78,9 +80,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
             ></i>
           </div>
           <span className="text-sm">
-            Don't have an account ?{' '}
+            עדיין אין לך משתמש?{' '}
             <Link to={'/auth/register'} className="text-blue-500">
-              Sign Up
+              הרשמה
             </Link>
           </span>
           <div className="relative flex justify-center">
@@ -88,7 +90,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
               className="bg-blue-500 justify-center items-center text-white rounded-md px-5 py-1"
               onClick={handleSubmit}
             >
-              Submit
+              כניסה
             </button>
           </div>
         </div>

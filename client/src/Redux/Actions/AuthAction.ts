@@ -78,5 +78,10 @@ export const register =
             ? error.response.data.message
             : error.message,
       });
+      throw new Error(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
     }
   };

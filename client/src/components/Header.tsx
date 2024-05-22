@@ -1,4 +1,8 @@
+import { useSelector } from 'react-redux';
+
 const Header = () => {
+  const userLogin = useSelector((state: any) => state.userLogin);
+  const { userInfo } = userLogin;
   return (
     <nav className="bg-cyan-950 fixed w-full z-20 top-0 start-0">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -21,13 +25,13 @@ const Header = () => {
             className="block text-white rounded md:bg-transparent  md:p-1 mr-4"
             aria-current="page"
           >
-            שלום יובל ליברשטיין
+            שלום {userInfo.name}
           </span>
           <button
             type="button"
             className="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            LOGOUT
+            התנתקות
           </button>
           <button
             data-collapse-toggle="navbar-sticky"
