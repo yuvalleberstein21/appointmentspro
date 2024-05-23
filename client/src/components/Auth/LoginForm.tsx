@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../Redux/Actions/AuthAction';
@@ -13,16 +13,24 @@ interface LoginFormProps {
   error: boolean;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading, error }) => {
   const [showPassword, setShowPasword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(error);
 
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/home');
+    }
+  }, [userInfo]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
       const action = login(phoneNumber, password);
       await dispatch(action);
@@ -38,7 +46,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading }) => {
     <div className="max-w-md mx-auto" dir="rtl">
       <GlobalToast />
       <div className="flex justify-center">
-        <h1 className="text-2xl font-semibold">התחברות</h1>
+        <h1 className="text-2xl font-semibold mt-4">התחברות</h1>
       </div>
       {loading && <Loading />}
 

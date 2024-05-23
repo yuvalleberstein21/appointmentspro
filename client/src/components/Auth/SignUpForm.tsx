@@ -36,11 +36,11 @@ const SignUpForm: React.FC<RegisterFormProps> = ({ userInfo, loading }) => {
   return (
     <div className="max-w-md mx-auto" dir="rtl">
       <GlobalToast />
-      <div className="flex justify-center">
-        <h1 className="text-2xl font-semibold">הרשמה</h1>
+      <div className="flex justify-center items-center">
+        <h1 className="text-2xl font-semibold mt-4">הרשמה</h1>
       </div>
       {loading && <Loading />}
-      <div className="divide-y divide-gray-200 p-6">
+      <div className="divide-y divide-gray-200 p-3">
         <div className="py-8 text-base leading-6 space-y-5 text-gray-700 sm:text-lg sm:leading-7">
           <div className="relative">
             <label htmlFor="name" className="text-sm">

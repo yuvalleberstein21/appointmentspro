@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
         enum: ['admin', 'user', 'manager'],
         default: 'user'
     },
+    businesses: [{ type: Schema.Types.ObjectId, ref: 'Business' }]
 }, {
     timestamps: true
 });

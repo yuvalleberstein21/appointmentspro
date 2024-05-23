@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDatabase = require('./config/MongoDB');
 const authRoutes = require('./Routes/AuthRoutes');
+const businessRoutes = require('./Routes/BusinessRoutes');
 
 dotenv.config();
 connectDatabase();
@@ -28,6 +29,7 @@ app.use((err, req, res, next) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/business', businessRoutes);
 
 
 
