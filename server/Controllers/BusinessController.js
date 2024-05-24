@@ -1,7 +1,17 @@
 const Business = require("../models/businessModel");
+const Service = require('../models/serviceModel');
 const User = require("../models/userModel");
 
 
+const getAllBusinesses = async (req, res) => {
+    try {
+        const businesses = await Business.find().populate('services');
+        return res.status(200).json(businesses);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while fetching the businesses' });
+    }
+};
 
 const createBusiness = async (req, res) => {
     try {
@@ -11,13 +21,33 @@ const createBusiness = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        const businessData = req.body;
+        const { name, city, address, services, workingDays, startHour, endHour, images } = req.body;
 
         const business = new Business({
-            ...businessData,
+            name,
+            city,
+            address,
+            workingDays,
+            startHour,
+            endHour,
+            images,
             owner: user._id
         });
         await business.save();
+
+        const serviceIds = [];
+        for (let serviceData of services) {
+            const service = new Service({
+                ...serviceData,
+                business: business._id
+            });
+            await service.save();
+            serviceIds.push(service._id);
+        }
+
+        business.services = serviceIds;
+        await business.save();
+
         user.businesses.push(business._id);
         await user.save();
 
@@ -28,4 +58,24 @@ const createBusiness = async (req, res) => {
     }
 };
 
-module.exports = createBusiness
+const getBusiness = async (req, res) => {
+    try {
+        const businessId = req.params.id;
+        const business = await Business.findById(businessId).populate('services');
+
+        if (!business) {
+            return res.status(404).json({ error: 'Business not found' });
+        }
+        return res.status(200).json(business);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while fetching the business data' });
+    }
+};
+
+
+module.exports = {
+    getAllBusinesses,
+    createBusiness,
+    getBusiness
+};

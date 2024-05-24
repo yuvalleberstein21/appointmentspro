@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
         enum: ['admin', 'user', 'manager'],
         default: 'user'
     },
-    businesses: [{ type: Schema.Types.ObjectId, ref: 'Business' }]
+    businesses: [{ type: mongoose.Types.ObjectId, ref: 'Business' }]
 }, {
     timestamps: true
 });

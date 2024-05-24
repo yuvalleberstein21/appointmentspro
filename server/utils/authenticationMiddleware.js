@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('./models/User'); // Adjust the path according to your project structure
+const User = require('../models/userModel'); // Adjust the path according to your project structure
 
 const authenticate = async (req, res, next) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
