@@ -1,11 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSingleBusinesessAction } from '../Redux/Actions/BusinessAction';
 import SingleBusinessHeader from '../components/Business/SingleBusiness/SingleBusinessHeader';
 import Loading from '../Utils/Loading';
+import Services from '../components/Business/SingleBusiness/Services';
+import Hours from '../components/Business/SingleBusiness/Hours';
 
 const SingleBusinessPage = () => {
+  const [selectedService, setSelectedService] = useState(null);
+  const [step, setStep] = useState(1);
+
   const getSingleBusiness = useSelector(
     (state: any) => state.getSingleBusiness
   );
@@ -22,16 +27,48 @@ const SingleBusinessPage = () => {
     }
   }, [businessId, dispatch]);
 
+  const handleServiceSelect = (service: any) => {
+    setSelectedService(service);
+  };
+
+  const handleNextStep = () => {
+    setStep((prevStep) => prevStep + 1);
+  };
+
+  const handlePrevStep = () => {
+    setStep((prevStep) => prevStep - 1);
+  };
+
+  console.log(selectedService);
+
   return (
-    <div className="flex flex-col md:flex-row gap-4 mx-5">
-      {loading ? (
-        <Loading />
-      ) : error ? (
-        <div>{error}</div>
-      ) : (
-        <SingleBusinessHeader business={business} />
-      )}
-    </div>
+    <>
+      <div className="flex flex-col md:flex-row gap-4 mx-5">
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          <SingleBusinessHeader business={business} />
+        )}
+      </div>
+      <div className="flex justify-center items-center mt-8">
+        {step === 1 && (
+          <Services
+            business={business}
+            onServiceSelect={handleServiceSelect}
+            onNextStep={handleNextStep}
+          />
+        )}
+        {step === 2 && (
+          <Hours
+            selectedService={selectedService}
+            onNextStep={handleNextStep}
+            onPrevStep={handlePrevStep}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

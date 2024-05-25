@@ -3,7 +3,14 @@ export interface Business {
   name: string;
   city: string;
   address: string;
-  services: [];
+  services: [
+    {
+      _id: string;
+      name: string;
+      price: number;
+      serviceTime: number;
+    }
+  ];
   workingDays: [{}];
   images: [string];
   owner: string;

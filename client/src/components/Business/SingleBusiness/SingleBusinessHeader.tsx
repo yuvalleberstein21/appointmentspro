@@ -1,12 +1,12 @@
 import { Fragment } from 'react/jsx-runtime';
 import { Business } from '../../../Helpers/BusinessType';
+import AppointmentList from '../AppointmentList';
 
 interface BusinessData {
   business: Business;
 }
 
 const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
-  console.log(business);
   return (
     <Fragment>
       <div className="md:basis-3/5 p-4 mx-auto text-center" key={business?._id}>
@@ -19,7 +19,7 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
             />
           </div>
           <div className="p-6 text-center" dir="rtl">
-            <h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-gray-900">
               {business?.name}
             </h4>
             <p className="block font-sans text-base antialiased font-medium leading-relaxed text-gray-500 bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
@@ -74,6 +74,7 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
             />
           </div>
         </div>
+        <AppointmentList />
       </div>
     </Fragment>
   );
