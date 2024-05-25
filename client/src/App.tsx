@@ -4,6 +4,7 @@ import AuthPage from './pages/AuthPage';
 import Header from './components/Header';
 import AuthPageSignUp from './pages/AuthPageSignUp';
 import HomePage from './pages/HomePage';
+import SingleBusinessPage from './pages/SingleBusinessPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<AuthPage />} />
             <Route path="/auth/register" element={<AuthPageSignUp />} />
             <Route path="/home" element={<HomePage />} />
+            <Route path="/business/:id" element={<SingleBusinessPage />} />
             {/* <Route path="/homepage" element={<HomeScreen />} />
             <Route path="/business/:id" element={<SingleBusiness />} />
             <Route
