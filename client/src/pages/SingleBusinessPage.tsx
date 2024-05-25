@@ -6,9 +6,11 @@ import SingleBusinessHeader from '../components/Business/SingleBusiness/SingleBu
 import Loading from '../Utils/Loading';
 import Services from '../components/Business/SingleBusiness/Services';
 import Hours from '../components/Business/SingleBusiness/Hours';
+import Dates from '../components/Business/SingleBusiness/Dates';
 
 const SingleBusinessPage = () => {
   const [selectedService, setSelectedService] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [step, setStep] = useState(1);
 
   const getSingleBusiness = useSelector(
@@ -29,6 +31,10 @@ const SingleBusinessPage = () => {
 
   const handleServiceSelect = (service: any) => {
     setSelectedService(service);
+  };
+
+  const handleDateSelect = (date: any) => {
+    setSelectedDate(date);
   };
 
   const handleNextStep = () => {
@@ -61,7 +67,16 @@ const SingleBusinessPage = () => {
           />
         )}
         {step === 2 && (
+          <Dates
+            business={business}
+            onDateSelect={handleDateSelect}
+            onNextStep={handleNextStep}
+            onPrevStep={handlePrevStep}
+          />
+        )}
+        {step === 3 && (
           <Hours
+            business={business}
             selectedService={selectedService}
             onNextStep={handleNextStep}
             onPrevStep={handlePrevStep}
