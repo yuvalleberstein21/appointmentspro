@@ -1,4 +1,7 @@
 import {
+  CREATE_BUSINESS_FAIL,
+  CREATE_BUSINESS_REQUEST,
+  CREATE_BUSINESS_SUCCESS,
   GET_ALL_BUSINESS_FAIL,
   GET_ALL_BUSINESS_REQUEST,
   GET_ALL_BUSINESS_SUCCESS,
@@ -27,6 +30,19 @@ export const getSingleBusinessReducer = (state = {}, action: any) => {
     case GET_SINGLE_BUSINESS_SUCCESS:
       return { loading: false, business: action.payload };
     case GET_SINGLE_BUSINESS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const createBusinessReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case CREATE_BUSINESS_REQUEST:
+      return { loading: true };
+    case CREATE_BUSINESS_SUCCESS:
+      return { loading: false, business: action.payload };
+    case CREATE_BUSINESS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

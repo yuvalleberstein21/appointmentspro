@@ -10,9 +10,7 @@ const HomePage = () => {
       <img src={homePageImage} alt="home page image" />
       <div className="p-4">
         <Search userInfo={userInfo} />
-        {/* <div>
-          <MainButtons />
-        </div> */}
+        <MainButtons />
       </div>
     </div>
   );

@@ -11,11 +11,11 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
     <Fragment>
       <div className="md:basis-3/5 p-4 mx-auto text-center" key={business?._id}>
         <div className="relative flex flex-col text-gray-700 bg-slate-100 shadow-md bg-clip-border rounded-xl w-full">
-          <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-slate-100 shadow-lg bg-clip-border rounded-xl h-80">
+          <div className="relative  mt-4 overflow-hidden  text-gray-700 bg-slate-100 shadow-lg bg-clip-border rounded-b-3xl mx-10 h-80">
             <img
               src={business?.images[0]}
               alt={business?.name}
-              className="bg-cover bg-center h-full w-full"
+              className="bg-cover bg-center h-full w-full r"
             />
           </div>
           <div className="p-6 text-center" dir="rtl">

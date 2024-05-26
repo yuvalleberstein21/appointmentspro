@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { userLoginReducer, userRegisterReducer } from './Reducers/AuthReducer';
 import {
+  createBusinessReducer,
   getAllBusinessReducer,
   getSingleBusinessReducer,
 } from './Reducers/BusinessReducer';
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   getAllBusinesess: getAllBusinessReducer,
   getSingleBusiness: getSingleBusinessReducer,
+  createBusiness: createBusinessReducer,
 });
 
 const userInfoFromLocalStorage = localStorage.getItem('userInfo')

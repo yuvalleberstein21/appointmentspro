@@ -49,6 +49,7 @@ const createBusiness = async (req, res) => {
         await business.save();
 
         user.businesses.push(business._id);
+        await User.findByIdAndUpdate(req.user._id, { role: 'manager' });
         await user.save();
 
         return res.status(201).json(business);
