@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Business = require("../models/businessModel");
 const Service = require('../models/serviceModel');
 const User = require("../models/userModel");
@@ -75,8 +76,66 @@ const getBusiness = async (req, res) => {
 };
 
 
+const updateBusiness = async (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const business = await Business.findById(id).session(session);
+
+        if (!business) {
+            return res.status(404).send({ message: 'Business not found' });
+        }
+
+        // Update business fields except for services
+        const { services, ...businessUpdates } = updates;
+        Object.assign(business, businessUpdates);
+        await business.save({ session });
+
+        // Update services if provided
+        if (services) {
+            const serviceIds = [];
+            for (const serviceData of services) {
+                if (serviceData._id) {
+                    // Update existing service
+                    const updatedService = await Service.findByIdAndUpdate(serviceData._id, serviceData, { new: true, session });
+                    serviceIds.push(updatedService._id);
+                } else {
+                    // Create new service
+                    const newService = new Service({ ...serviceData, business: business._id });
+                    await newService.save({ session });
+                    serviceIds.push(newService._id);
+                }
+            }
+            business.services = serviceIds;
+        }
+
+        await business.save({ session });
+        await session.commitTransaction();
+
+        res.status(200).send(business);
+    } catch (error) {
+        await session.abortTransaction();
+        console.error(error);
+        res.status(400).send({ message: 'Error updating business', error });
+    } finally {
+        session.endSession();
+    }
+};
+
 module.exports = {
     getAllBusinesses,
     createBusiness,
-    getBusiness
+    getBusiness,
+    updateBusiness
 };

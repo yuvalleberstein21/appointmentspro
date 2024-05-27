@@ -1,9 +1,23 @@
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../Redux/Actions/AuthAction';
 
 const Header = () => {
   const userLogin = useSelector((state: any) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
+
+  const handleLogout = (e: any) => {
+    e.preventDefault;
+    try {
+      dispatch(logout());
+      navigate('/home');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <nav className="bg-cyan-950 w-full z-20 top-0 start-0">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -28,12 +42,25 @@ const Header = () => {
           >
             {userInfo ? `שלום ${userInfo.name}` : 'שלום אורח'}
           </span>
-          <button
-            type="button"
-            className="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            התנתקות
-          </button>
+          {userInfo ? (
+            <button
+              type="button"
+              className="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={handleLogout}
+            >
+              התנתקות
+            </button>
+          ) : (
+            <Link to={'/'}>
+              <button
+                type="button"
+                className="text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                התחברות
+              </button>
+            </Link>
+          )}
+
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"

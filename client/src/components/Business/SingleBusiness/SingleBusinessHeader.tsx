@@ -49,17 +49,17 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
           {/* Top three images */}
           <div className="grid grid-cols-3 gap-3 bg-center bg-cover mx-4 mt-4 overflow-hidden rounded-t-xl h-40">
             <img
-              src={business?.images[0]}
-              alt={business?.name}
-              className="h-full w-full object-cover rounded-md"
-            />
-            <img
               src={business?.images[1]}
               alt={business?.name}
               className="h-full w-full object-cover rounded-md"
             />
             <img
-              src={business?.images[0]}
+              src={business?.images[2]}
+              alt={business?.name}
+              className="h-full w-full object-cover rounded-md"
+            />
+            <img
+              src={business?.images[3]}
               alt={business?.name}
               className="h-full w-full object-cover rounded-md"
             />
@@ -68,7 +68,7 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
           {/* Bottom image */}
           <div className="relative mx-4 gap-3 mt-1 overflow-hidden text-gray-700 bg-slate-100 shadow-lg bg-clip-border rounded-b-xl h-40 mb-3">
             <img
-              src={business?.images[1]}
+              src={business?.images[4]}
               alt={business?.name}
               className="h-full w-full object-cover rounded-md"
             />

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBusinesessAction } from '../../Redux/Actions/BusinessAction';
+import { useNavigate } from 'react-router-dom';
 
 const CreateBusinessForm = () => {
   const [business, setBusiness] = useState({
@@ -13,6 +14,7 @@ const CreateBusinessForm = () => {
   });
 
   const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -67,7 +69,10 @@ const CreateBusinessForm = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     try {
-      dispatch(createBusinesessAction(business));
+      const createdBusiness = dispatch(createBusinesessAction(business));
+      if (createdBusiness) {
+        navigate(`/business/${createdBusiness.id}`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -75,65 +80,74 @@ const CreateBusinessForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-lg"
+      className="max-w-xl mx-auto p-4 bg-slate-100 shadow-md rounded-lg mt-5"
+      dir="rtl"
     >
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Name:</label>
+        <label className="block text-gray-700 font-bold mb-2">שם העסק : </label>
         <input
           type="text"
           name="name"
           value={business.name}
           onChange={handleChange}
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border-1 border-gray-300 rounded-md"
+          required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">City:</label>
+        <label className="block text-gray-700 font-bold mb-2">עיר :</label>
         <input
           type="text"
           name="city"
           value={business.city}
           onChange={handleChange}
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border-1 border-gray-300 rounded-md"
+          required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Address:</label>
+        <label className="block text-gray-700 font-bold mb-2">כתובת :</label>
         <input
           type="text"
           name="address"
           value={business.address}
           onChange={handleChange}
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border-1 border-gray-300 rounded-md"
+          required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Services:</label>
+        <label className="block text-gray-700 font-bold mb-2">
+          פרטי השירות :
+        </label>
         {business.services.map((service, index) => (
           <div key={index} className="mb-2">
             <input
               type="text"
               name="name"
-              placeholder="Service Name"
+              placeholder="שם השירות"
               value={service.name}
               onChange={(e) => handleServiceChange(index, e)}
-              className="w-full p-2 border rounded-md mb-2"
+              className="w-full p-2 border-1 border-gray-300 rounded-md mb-2"
+              required
             />
             <input
               type="number"
               name="price"
-              placeholder="Price"
+              placeholder="מחיר השירות"
               value={service.price}
               onChange={(e) => handleServiceChange(index, e)}
-              className="w-full p-2 border rounded-md mb-2"
+              className="w-full p-2 border-1 border-gray-300 rounded-md mb-2"
+              required
             />
             <input
               type="number"
               name="serviceTime"
-              placeholder="Service Time"
+              placeholder="זמן השירות"
               value={service.serviceTime}
               onChange={(e) => handleServiceChange(index, e)}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 border-1 border-gray-300 rounded-md"
+              required
             />
           </div>
         ))}
@@ -142,38 +156,46 @@ const CreateBusinessForm = () => {
           onClick={addService}
           className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
         >
-          Add Service
+          הוסף שירות
         </button>
       </div>
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2">
-          Working Days:
+          ימי פעילות :
         </label>
         {business.workingDays.map((day, index) => (
           <div key={index} className="mb-2">
-            <input
-              type="text"
+            <select
+              className="w-full p-2 border-1 border-gray-300 rounded-md mb-2"
               name="day"
-              placeholder="Day"
-              value={day.day}
               onChange={(e) => handleWorkingDayChange(index, e)}
-              className="w-full p-2 border rounded-md mb-2"
-            />
+              required
+            >
+              <option value="">--</option>
+              <option value="sunday">ראשון</option>
+              <option value="monday">שני</option>
+              <option value="tuesday">שלישי</option>
+              <option value="wednesday">רביעי</option>
+              <option value="thursday">חמישי</option>
+              <option value="friday">שישי</option>
+            </select>
             <input
               type="time"
               name="startHour"
-              placeholder="Start Hour"
+              placeholder="שעת פתיחה"
               value={day.startHour}
               onChange={(e) => handleWorkingDayChange(index, e)}
-              className="w-full p-2 border rounded-md mb-2"
+              className="w-full p-2 border-1 border-gray-300 rounded-md mb-2"
+              required
             />
             <input
               type="time"
               name="endHour"
-              placeholder="End Hour"
+              placeholder="שעת סגירה"
               value={day.endHour}
               onChange={(e) => handleWorkingDayChange(index, e)}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 border-1 border-gray-300 rounded-md"
+              required
             />
           </div>
         ))}
@@ -182,11 +204,11 @@ const CreateBusinessForm = () => {
           onClick={addWorkingDay}
           className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
         >
-          Add Working Day
+          הוסף יום פעילות
         </button>
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Images:</label>
+        <label className="block text-gray-700 font-bold mb-2">תמונות :</label>
         {business.images.map((image, index) => (
           <div key={index} className="mb-2">
             <input
@@ -195,6 +217,7 @@ const CreateBusinessForm = () => {
               value={image}
               onChange={(e) => handleImageChange(index, e)}
               className="w-full p-2 border rounded-md"
+              required
             />
           </div>
         ))}
@@ -203,14 +226,14 @@ const CreateBusinessForm = () => {
           onClick={addImage}
           className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
         >
-          Add Image
+          הוסף תמונה
         </button>
       </div>
       <button
         type="submit"
         className="w-full px-4 py-2 bg-green-500 text-white font-bold rounded-md"
       >
-        Create Business
+        צור עסק
       </button>
     </form>
   );
