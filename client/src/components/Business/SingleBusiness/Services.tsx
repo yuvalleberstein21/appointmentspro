@@ -1,4 +1,6 @@
+import { useEffect, useRef, useState } from 'react';
 import { Business } from '../../../Helpers/BusinessType';
+import Service from '../../../Helpers/ServiceType';
 
 interface BusinessData {
   business: Business;
@@ -27,7 +29,7 @@ const Services: React.FC<BusinessData> = ({
       </h1>
       {/* services options */}
       <div className="flex flex-col gap-3 mt-4" dir="rtl">
-        {business?.services.map((service) => (
+        {business?.services.map((service, index) => (
           <div
             key={service._id}
             className="bg-white p-3 flex flex-col rounded-md cursor-pointer hover:bg-lime-100"

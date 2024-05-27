@@ -100,14 +100,7 @@ const Header = () => {
                 Home
               </Link>
             </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-white rounded  md:hover:bg-transparent md:hover:text-emerald-100 md:p-0 md:dark:hover:text-emerald-100 dark:text-white"
-              >
-                About
-              </a>
-            </li>
+
             <li>
               <a
                 href="#"

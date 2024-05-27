@@ -14,3 +14,5 @@ interface HoursProps {
   onNextStep: () => void;
   onPrevStep: () => void;
 }
+
+export default Service;

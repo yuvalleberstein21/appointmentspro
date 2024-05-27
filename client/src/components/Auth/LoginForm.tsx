@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { login } from '../../Redux/Actions/AuthAction';
 import { User } from '../../Helpers/AuthType';
 import Loading from '../../Utils/Loading';
@@ -21,12 +21,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading, error }) => {
 
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/home');
+      const redirectTo = (location.state as any)?.from || '/home';
+      navigate(redirectTo);
     }
-  }, [userInfo]);
+  }, [userInfo, navigate, location.state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,9 +36,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading, error }) => {
     try {
       const action = login(phoneNumber, password);
       await dispatch(action);
-      if (userInfo) {
-        navigate('/home');
-      }
     } catch (error: any) {
       toast.error(error.message);
     }

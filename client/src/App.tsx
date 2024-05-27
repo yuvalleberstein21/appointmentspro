@@ -6,6 +6,7 @@ import AuthPageSignUp from './pages/AuthPageSignUp';
 import HomePage from './pages/HomePage';
 import SingleBusinessPage from './pages/SingleBusinessPage';
 import CreateBusiness from './pages/CreateBusiness';
+import ProtectedRoute from './Utils/ProtectedRoute';
 
 function App() {
   return (
@@ -18,7 +19,14 @@ function App() {
             <Route path="/auth/register" element={<AuthPageSignUp />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/business/:id" element={<SingleBusinessPage />} />
-            <Route path="/createbusiness" element={<CreateBusiness />} />
+            <Route
+              path="/createbusiness"
+              element={
+                <ProtectedRoute>
+                  <CreateBusiness />
+                </ProtectedRoute>
+              }
+            />
             {/* <Route path="/homepage" element={<HomeScreen />} />
             <Route path="/business/:id" element={<SingleBusiness />} />
             <Route
