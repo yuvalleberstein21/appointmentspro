@@ -39,6 +39,7 @@ const Header = () => {
           <span
             className="block text-white rounded md:bg-transparent  md:p-1 mr-4"
             aria-current="page"
+            dir="rtl"
           >
             {userInfo ? `שלום ${userInfo.name}` : 'שלום אורח'}
           </span>
@@ -97,18 +98,19 @@ const Header = () => {
                 className="block py-2 px-3 text-white rounded md:bg-transparent md:text-emerald-100 md:p-0 md:dark:text-emerald-100"
                 aria-current="page"
               >
-                Home
+                דף הבית
               </Link>
             </li>
-
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-white rounded  md:hover:bg-transparent md:hover:text-emerald-100 md:p-0 md:dark:hover:text-emerald-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Services
-              </a>
-            </li>
+            {userInfo?.role === 'manager' && (
+              <li>
+                <a
+                  href="#"
+                  className="block py-2 px-3 text-white rounded  md:hover:bg-transparent md:hover:text-emerald-100 md:p-0 md:dark:hover:text-emerald-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  ניהול תורים
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -6,11 +6,13 @@ const HomePage = () => {
   const userLogin = useSelector((state: any) => state.userLogin);
   const { userInfo } = userLogin;
   return (
-    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4 p-4 ">
+    <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
       <img src={homePageImage} alt="home page image" />
-      <div className="p-4">
+      <div className="flex flex-col justify-between p-4">
         <Search userInfo={userInfo} />
-        <MainButtons />
+        <div className="mt-4">
+          <MainButtons />
+        </div>
       </div>
     </div>
   );

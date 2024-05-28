@@ -15,19 +15,14 @@ const MainButtons = () => {
   };
   return (
     <>
-      <div
-        className="max-w-md mx-auto py-10 gap-4 bottom-0 absolute right-40"
-        dir="rtl"
-      >
+      <div className="max-w-md mx-auto py-10 gap-4 flex flex-col" dir="rtl">
         <button
-          className="bg-gray-900 p-2  text-white rounded-lg w-full"
+          className="bg-gray-900 p-2 text-white rounded-lg w-full"
           onClick={handleCreateBusinessClick}
         >
           צור עסק
         </button>
-
-        <br />
-        <button className="bg-gray-900 p-2  text-white rounded-lg w-full mt-2">
+        <button className="bg-gray-900 p-2 text-white rounded-lg w-full mt-2">
           עריכת עסק קיים
         </button>
       </div>

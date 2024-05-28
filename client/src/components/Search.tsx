@@ -9,7 +9,7 @@ interface componentData {
   userInfo: User;
 }
 const Search: React.FC<componentData> = ({ userInfo }) => {
-  const [inputSearch, setInputSeatch] = useState('');
+  const [inputSearch, setInputSearch] = useState('');
 
   const getAllBusinesess = useSelector((state: any) => state.getAllBusinesess);
   const { loading, error, businesses } = getAllBusinesess;
@@ -20,7 +20,6 @@ const Search: React.FC<componentData> = ({ userInfo }) => {
     try {
       const action = getAllBusinesessAction();
       dispatch(action);
-      console.log(businesses);
     } catch (error) {
       console.log(error);
     }
@@ -32,16 +31,16 @@ const Search: React.FC<componentData> = ({ userInfo }) => {
 
   return (
     <div
-      className="card max-w-md mx-auto p-2 h-52 bg-slate-100 rounded-lg mt-10"
+      className="card max-w-lg w-full mx-auto p-6 bg-slate-100 rounded-lg mt-10"
       dir="rtl"
     >
       <div className="card-title flex items-center">
         <h1>{userInfo?.name ? `שלום ${userInfo.name} 👋🏼` : 'שלום אורח'}</h1>
       </div>
-      <div className="card-span flex items-center justify-center">
+      <div className="card-span flex items-center justify-center mt-2">
         <span className="text-gray-500 py-1">קביעת תורים לכל עסק קיים</span>
       </div>
-      <form className="mt-5 py-5">
+      <form className="mt-5">
         <label
           htmlFor="default-search"
           className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -69,10 +68,10 @@ const Search: React.FC<componentData> = ({ userInfo }) => {
           <input
             type="search"
             id="default-search"
-            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="חיפוש עסק קיים..."
             value={inputSearch}
-            onChange={(e) => setInputSeatch(e.target.value)}
+            onChange={(e) => setInputSearch(e.target.value)}
           />
           <button
             type="submit"
@@ -83,11 +82,7 @@ const Search: React.FC<componentData> = ({ userInfo }) => {
         </div>
 
         {inputSearch && filterBusinesess?.length > 0
-          ? filterBusinesess.map((b: any) => (
-              // <div key={b._id}>
-              //   <div>{b.name}</div>
-              // </div>
-
+          ? filterBusinesess.map((b) => (
               <div
                 className="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto cursor-pointer mt-2"
                 key={b._id}

@@ -45,42 +45,46 @@ const SingleBusinessPage = () => {
     setStep((prevStep) => prevStep - 1);
   };
 
-  console.log(selectedService);
+  // console.log(selectedService);
 
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-4 mx-5">
+      <div className="flex flex-col gap-4 mx-5">
         {loading ? (
           <Loading />
         ) : error ? (
           <div>{error}</div>
         ) : (
-          <SingleBusinessHeader business={business} />
-        )}
-      </div>
-      <div className="flex justify-center items-center mt-8">
-        {step === 1 && (
-          <Services
-            business={business}
-            onServiceSelect={handleServiceSelect}
-            onNextStep={handleNextStep}
-          />
-        )}
-        {step === 2 && (
-          <Dates
-            business={business}
-            onDateSelect={handleDateSelect}
-            onNextStep={handleNextStep}
-            onPrevStep={handlePrevStep}
-          />
-        )}
-        {step === 3 && (
-          <Hours
-            business={business}
-            selectedService={selectedService}
-            onNextStep={handleNextStep}
-            onPrevStep={handlePrevStep}
-          />
+          <>
+            <div className="flex justify-center">
+              <SingleBusinessHeader business={business} />
+            </div>
+            <div className="flex justify-center items-center mt-8">
+              {step === 1 && (
+                <Services
+                  business={business}
+                  onServiceSelect={handleServiceSelect}
+                  onNextStep={handleNextStep}
+                />
+              )}
+              {step === 2 && (
+                <Dates
+                  business={business}
+                  onDateSelect={handleDateSelect}
+                  onNextStep={handleNextStep}
+                  onPrevStep={handlePrevStep}
+                />
+              )}
+              {step === 3 && (
+                <Hours
+                  business={business}
+                  selectedService={selectedService}
+                  onNextStep={handleNextStep}
+                  onPrevStep={handlePrevStep}
+                />
+              )}
+            </div>
+          </>
         )}
       </div>
     </>
