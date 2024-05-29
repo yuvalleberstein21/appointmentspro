@@ -2,12 +2,18 @@ import {
   CREATE_BUSINESS_FAIL,
   CREATE_BUSINESS_REQUEST,
   CREATE_BUSINESS_SUCCESS,
+  EDIT_BUSINESS_FAIL,
+  EDIT_BUSINESS_REQUEST,
+  EDIT_BUSINESS_SUCCESS,
   GET_ALL_BUSINESS_FAIL,
   GET_ALL_BUSINESS_REQUEST,
   GET_ALL_BUSINESS_SUCCESS,
   GET_SINGLE_BUSINESS_FAIL,
   GET_SINGLE_BUSINESS_REQUEST,
   GET_SINGLE_BUSINESS_SUCCESS,
+  GET_USER_BUSINESS_FAIL,
+  GET_USER_BUSINESS_REQUEST,
+  GET_USER_BUSINESS_SUCCESS,
 } from '../Constants/BusinessConstant';
 
 export const getAllBusinessReducer = (state = {}, action: any) => {
@@ -43,6 +49,32 @@ export const createBusinessReducer = (state = {}, action: any) => {
     case CREATE_BUSINESS_SUCCESS:
       return { loading: false, business: action.payload };
     case CREATE_BUSINESS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const editBusinessReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case EDIT_BUSINESS_REQUEST:
+      return { loading: true };
+    case EDIT_BUSINESS_SUCCESS:
+      return { loading: false, business: action.payload };
+    case EDIT_BUSINESS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userBusinessReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case GET_USER_BUSINESS_REQUEST:
+      return { loading: true };
+    case GET_USER_BUSINESS_SUCCESS:
+      return { loading: false, business: action.payload };
+    case GET_USER_BUSINESS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

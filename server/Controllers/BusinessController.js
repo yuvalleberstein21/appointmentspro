@@ -68,6 +68,7 @@ const getBusiness = async (req, res) => {
         if (!business) {
             return res.status(404).json({ error: 'Business not found' });
         }
+
         return res.status(200).json(business);
     } catch (error) {
         console.error(error);
@@ -133,9 +134,24 @@ const updateBusiness = async (req, res) => {
     }
 };
 
+const getUserBusinesses = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        if (!userId) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        const businesses = await Business.find({ owner: userId }).populate('services');
+        res.json(businesses);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 module.exports = {
     getAllBusinesses,
     createBusiness,
     getBusiness,
-    updateBusiness
+    updateBusiness,
+    getUserBusinesses
 };

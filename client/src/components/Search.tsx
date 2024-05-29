@@ -4,6 +4,7 @@ import { getAllBusinesessAction } from '../Redux/Actions/BusinessAction';
 import { User } from '../Helpers/AuthType';
 import Loading from '../Utils/Loading';
 import { Link } from 'react-router-dom';
+import { Business } from '../Helpers/BusinessType';
 
 interface componentData {
   userInfo: User;
@@ -82,7 +83,7 @@ const Search: React.FC<componentData> = ({ userInfo }) => {
         </div>
 
         {inputSearch && filterBusinesess?.length > 0
-          ? filterBusinesess.map((b) => (
+          ? filterBusinesess.map((b: Business) => (
               <div
                 className="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto cursor-pointer mt-2"
                 key={b._id}

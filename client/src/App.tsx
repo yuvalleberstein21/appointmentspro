@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import SingleBusinessPage from './pages/SingleBusinessPage';
 import CreateBusiness from './pages/CreateBusiness';
 import ProtectedRoute from './Utils/ProtectedRoute';
+import EditBusinessPage from './pages/EditBusinessPage';
 
 function App() {
   return (
@@ -27,6 +28,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/editbusiness"
+              element={
+                <ProtectedRoute>
+                  <EditBusinessPage />
+                </ProtectedRoute>
+              }
+            />
+
             {/* <Route path="/homepage" element={<HomeScreen />} />
             <Route path="/business/:id" element={<SingleBusiness />} />
             <Route

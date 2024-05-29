@@ -12,6 +12,8 @@ const businessSchema = mongoose.Schema({
     }],
     images: [String],
     owner: { type: mongoose.Types.ObjectId, ref: 'User', required: true }
+}, {
+    timestamps: true,
 });
 
 const Business = mongoose.model('Business', businessSchema);
