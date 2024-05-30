@@ -123,6 +123,10 @@ export const userBusinesessAction =
         userLogin: { userInfo },
       } = getState();
 
+      if (!userInfo || !userInfo.token) {
+        throw new Error('User not authenticated');
+      }
+
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -163,6 +167,10 @@ export const editBusinesessAction =
         userLogin: { userInfo },
       } = getState();
 
+      if (!userInfo || !userInfo.token) {
+        throw new Error('User not authenticated');
+      }
+
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -179,6 +187,8 @@ export const editBusinesessAction =
         type: EDIT_BUSINESS_SUCCESS,
         payload: data,
       });
+      dispatch(userBusinesessAction());
+      return data;
     } catch (error: any) {
       dispatch({
         type: EDIT_BUSINESS_FAIL,

@@ -1,20 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Business } from '../../Helpers/BusinessType';
-import { editBusinesessAction } from '../../Redux/Actions/BusinessAction';
+import { EditBusinessFormProps } from '../../Helpers/BusinessType';
+import {
+  editBusinesessAction,
+  userBusinesessAction,
+} from '../../Redux/Actions/BusinessAction';
 
-const EditBusinessForm = (selectedBusiness: Business) => {
+const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
+  selectedBusiness,
+}) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state: any) => state.userLogin);
+  const [errorEditBusiness, setErrorEditBusiness] = useState('');
 
   const [formData, setFormData] = useState({
-    name: '',
+    name: selectedBusiness?.name || '',
     city: '',
     address: '',
     services: [{ _id: '', name: '', price: '', serviceTime: '' }],
     workingDays: [{ day: '', startHour: '', endHour: '' }],
     images: [''],
   });
+
+  useEffect(() => {
+    if (selectedBusiness) {
+      setFormData({
+        name: selectedBusiness.name || '',
+        city: selectedBusiness.city || '',
+        address: selectedBusiness.address || '',
+        services:
+          selectedBusiness.services?.length > 0
+            ? selectedBusiness.services
+            : [{ _id: '', name: '', price: '', serviceTime: '' }],
+        workingDays:
+          selectedBusiness.workingDays?.length > 0
+            ? selectedBusiness.workingDays
+            : [{ day: '', startHour: '', endHour: '' }],
+        images:
+          selectedBusiness.images?.length > 0 ? selectedBusiness.images : [''],
+      });
+    } else {
+      setFormData({
+        name: '',
+        city: '',
+        address: '',
+        services: [{ _id: '', name: '', price: '', serviceTime: '' }],
+        workingDays: [{ day: '', startHour: '', endHour: '' }],
+        images: [''],
+      });
+    }
+  }, [selectedBusiness]);
 
   console.log(selectedBusiness);
 
@@ -80,8 +115,12 @@ const EditBusinessForm = (selectedBusiness: Business) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // dispatch(editBusinesessAction(businessId, formData));
+    const businessId = selectedBusiness._id;
+    try {
+      dispatch(editBusinesessAction(businessId, formData));
+    } catch (error: any) {
+      setErrorEditBusiness(error.message);
+    }
   };
 
   return (
@@ -90,6 +129,8 @@ const EditBusinessForm = (selectedBusiness: Business) => {
       className="max-w-xl mx-auto p-4 bg-slate-100 shadow-md rounded-lg mt-5"
       dir="rtl"
     >
+      {errorEditBusiness && <div>{errorEditBusiness}</div>}
+
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2">שם העסק :</label>
         <input
@@ -241,6 +282,13 @@ const EditBusinessForm = (selectedBusiness: Business) => {
               value={image}
               className="w-full p-2 border-1 border-gray-300 rounded-md"
               onChange={(e) => handleChange(e, index, 'images')}
+            />
+            <img
+              src={image}
+              alt={formData.name}
+              width="100"
+              height="100"
+              className="rounded-lg mt-2"
             />
             <button
               type="button"

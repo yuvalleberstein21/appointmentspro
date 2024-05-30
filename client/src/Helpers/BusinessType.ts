@@ -15,3 +15,7 @@ export interface Business {
   images: [string];
   owner: string;
 }
+
+export interface EditBusinessFormProps {
+  selectedBusiness: Business;
+}
