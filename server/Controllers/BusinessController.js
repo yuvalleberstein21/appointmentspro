@@ -2,7 +2,9 @@ const { default: mongoose } = require("mongoose");
 const Business = require("../models/businessModel");
 const Service = require('../models/serviceModel');
 const User = require("../models/userModel");
-
+const fs = require('fs');
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
 
 const getAllBusinesses = async (req, res) => {
     try {
@@ -18,10 +20,32 @@ const createBusiness = async (req, res) => {
     try {
         const userId = req.user._id
         const user = await User.findById(userId);
+        let uploadedImages = [];
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
+        // Process images
+        if (req.files && req.files.length > 0) {
+            for (let file of req.files) {
+                const bucketName = process.env.BUCKET_NAME;
+                const newFileNameKey = `images/${file.originalname}`;
+                const fileStream = fs.createReadStream(file.path);
+
+                const params = {
+                    Bucket: bucketName,
+                    Key: newFileNameKey,
+                    Body: fileStream
+                };
+
+                const data = await s3.upload(params).promise();
+                uploadedImages.push(data.Location);
+
+                // Remove file from server after uploading
+                fs.unlinkSync(file.path);
+            }
+        }
+
         const { name, city, address, services, workingDays, startHour, endHour, images } = req.body;
 
         const business = new Business({
@@ -31,9 +55,10 @@ const createBusiness = async (req, res) => {
             workingDays,
             startHour,
             endHour,
-            images,
+            images: uploadedImages,
             owner: user._id
         });
+
         await business.save();
 
         const serviceIds = [];

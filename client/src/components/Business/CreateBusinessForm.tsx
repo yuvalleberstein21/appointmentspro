@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBusinesessAction } from '../../Redux/Actions/BusinessAction';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const CreateBusinessForm = () => {
   const [business, setBusiness] = useState({
@@ -35,11 +36,42 @@ const CreateBusinessForm = () => {
     setBusiness({ ...business, workingDays: newWorkingDays });
   };
 
-  const handleImageChange = (index: number, e: any) => {
-    const { value } = e.target;
-    const newImages = [...business.images];
-    newImages[index] = value;
-    setBusiness({ ...business, images: newImages });
+  // const handleImageChange = (index: number, e: any) => {
+  //   const { value } = e.target;
+  //   const newImages = [...business.images];
+  //   newImages[index] = value;
+  //   setBusiness({ ...business, images: newImages });
+  // };
+  const handleFileChange = async (index, e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/api/upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      console.log('Server response:', response.data);
+      const data = response.data;
+      console.log(data);
+
+      const newImages = [...business.images];
+      newImages[index] = data.imageUrl; // Update the image URL after upload
+      setBusiness({ ...business, images: newImages });
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+        console.error('Error response headers:', error.response.headers);
+      }
+    }
   };
 
   const addService = () => {
@@ -212,12 +244,9 @@ const CreateBusinessForm = () => {
         {business.images.map((image, index) => (
           <div key={index} className="mb-2">
             <input
-              type="text"
-              placeholder="Image URL"
-              value={image}
-              onChange={(e) => handleImageChange(index, e)}
+              type="file"
+              onChange={(e) => handleFileChange(index, e)}
               className="w-full p-2 border rounded-md"
-              required
             />
           </div>
         ))}
