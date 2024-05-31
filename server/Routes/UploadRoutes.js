@@ -47,7 +47,7 @@ const uploadImage = async (req, res) => {
     }
 };
 
-uploadRoutes.post('/upload', upload.single('image'), uploadImage);
+uploadRoutes.post('/', upload.single('image'), uploadImage);
 
 module.exports = uploadRoutes;
 

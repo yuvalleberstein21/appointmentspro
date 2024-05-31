@@ -42,7 +42,7 @@ const CreateBusinessForm = () => {
   //   newImages[index] = value;
   //   setBusiness({ ...business, images: newImages });
   // };
-  const handleFileChange = async (index, e) => {
+  const handleFileChange = async (index: number, e: any) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file);
@@ -61,17 +61,20 @@ const CreateBusinessForm = () => {
       const data = response.data;
       console.log(data);
 
-      const newImages = [...business.images];
-      newImages[index] = data.imageUrl; // Update the image URL after upload
-      setBusiness({ ...business, images: newImages });
+      if (data && data.imageUrl) {
+        const newImages = [...business.images];
+        newImages[index] = data.imageUrl; // Update the image URL after upload
+        setBusiness({ ...business, images: newImages });
+      } else {
+        console.error('No imageUrl in response', data);
+      }
     } catch (error) {
       console.error('Error uploading file:', error);
-      if (error.response) {
-        console.error('Error response data:', error.response.data);
-        console.error('Error response status:', error.response.status);
-        console.error('Error response headers:', error.response.headers);
-      }
     }
+  };
+
+  const addImage = () => {
+    setBusiness({ ...business, images: [...business.images, ''] });
   };
 
   const addService = () => {
@@ -92,10 +95,6 @@ const CreateBusinessForm = () => {
         { day: '', startHour: '', endHour: '' },
       ],
     });
-  };
-
-  const addImage = () => {
-    setBusiness({ ...business, images: [...business.images, ''] });
   };
 
   const handleSubmit = (e: any) => {
@@ -245,6 +244,7 @@ const CreateBusinessForm = () => {
           <div key={index} className="mb-2">
             <input
               type="file"
+              accept="image/*"
               onChange={(e) => handleFileChange(index, e)}
               className="w-full p-2 border rounded-md"
             />

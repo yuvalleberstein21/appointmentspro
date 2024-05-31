@@ -46,7 +46,7 @@ const createBusiness = async (req, res) => {
             }
         }
 
-        const { name, city, address, services, workingDays, startHour, endHour, images } = req.body;
+        const { name, city, address, services, workingDays, startHour, endHour } = req.body;
 
         const business = new Business({
             name,
