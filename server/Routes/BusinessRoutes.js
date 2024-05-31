@@ -7,7 +7,6 @@ businessRoutes.get('/', getAllBusinesses);
 businessRoutes.post('/createbusiness', authenticate, createBusiness);
 businessRoutes.get('/mybusiness', authenticate, getUserBusinesses);
 businessRoutes.get('/:id', getBusiness);
-
 businessRoutes.put('/updatebusiness/:id', authenticate, updateBusiness);
 
 

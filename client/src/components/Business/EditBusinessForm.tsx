@@ -200,19 +200,21 @@ const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
             />
             <button
               type="button"
-              className="bg-red-700 p-2 text-white rounded-md text-sm mt-2 justify-between"
+              className="bg-gray-500 p-2 text-white rounded-md text-sm mt-2 justify-between"
               onClick={() => handleRemoveField(index, 'services')}
             >
-              מחק שירות זה
+              הסר שירות
+              <i className="fa-solid fa-trash p-1"></i>
             </button>
           </div>
         ))}
         <button
           type="button"
-          className="bg-blue-800 p-2 text-white rounded-md text-sm mt-2 justify-between"
+          className="bg-blue-500 p-2 text-white rounded-md text-sm mt-2 justify-between"
           onClick={() => handleAddField('services')}
         >
           הוסף שירות
+          <i className="fa-solid fa-plus p-1"></i>
         </button>
       </div>
 
@@ -254,19 +256,21 @@ const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
             />
             <button
               type="button"
-              className="bg-red-700 p-2 text-white rounded-md text-sm mt-2"
+              className="bg-gray-500 p-2 text-white rounded-md text-sm mt-2"
               onClick={() => handleRemoveField(index, 'workingDays')}
             >
-              מחק יום עבודה
+              הסר יום עבודה
+              <i className="fa-solid fa-trash p-1"></i>
             </button>
           </div>
         ))}
         <button
           type="button"
-          className="bg-blue-800 p-2 text-white rounded-md text-sm mt-2"
+          className="bg-blue-500 p-2 text-white rounded-md text-sm mt-2"
           onClick={() => handleAddField('workingDays')}
         >
           הוסף יום עבודה
+          <i className="fa-solid fa-plus p-1"></i>
         </button>
       </div>
 
@@ -292,19 +296,21 @@ const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
             />
             <button
               type="button"
-              className="bg-red-700 p-2 text-white rounded-md text-sm mt-2"
+              className="bg-gray-500 p-2 text-white rounded-md text-sm mt-2"
               onClick={() => handleRemoveField(index, 'images')}
             >
-              מחק תמונה
+              הסר תמונה
+              <i className="fa-solid fa-trash p-1"></i>
             </button>
           </div>
         ))}
         <button
           type="button"
-          className="bg-blue-800 p-2 text-white rounded-md text-sm mt-2"
+          className="bg-blue-500 p-2 text-white rounded-md text-sm mt-2"
           onClick={() => handleAddField('images')}
         >
           הוסף תמונה
+          <i className="fa-solid fa-plus p-1"></i>
         </button>
       </div>
 

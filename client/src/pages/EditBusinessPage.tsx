@@ -33,15 +33,28 @@ const EditBusinessPage = () => {
         <div>{error}</div>
       ) : (
         <>
-          <div dir="rtl">
-            <h1>בחר את העסק שאותו ברצונך לערוך</h1>
-            {business?.map((b: Business) => (
-              <div key={b._id} onClick={() => handleBusinessClick(b)}>
-                <div className="card">
-                  <div className="name">{b.name}</div>
+          <div
+            dir="rtl"
+            className="w-full py-5 bg-slate-100 flex justify-center"
+          >
+            <div className="w-full max-w-3xl">
+              <h1 className="text-2xl font-bold text-gray-800 mb-5">
+                בחר את העסק שאותו ברצונך לערוך
+              </h1>
+              {business?.map((b: Business) => (
+                <div
+                  key={b._id}
+                  onClick={() => handleBusinessClick(b)}
+                  className="cursor-pointer mb-4 p-5 bg-white rounded-lg shadow-lg transition-transform transform hover:scale-105"
+                >
+                  <div className="card bg-slate-300 p-3 rounded-lg">
+                    <div className="name text-lg font-medium text-gray-700">
+                      {b.name}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           <EditBusinessForm selectedBusiness={selectedBusiness} />
