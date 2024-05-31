@@ -36,42 +36,43 @@ const CreateBusinessForm = () => {
     setBusiness({ ...business, workingDays: newWorkingDays });
   };
 
-  // const handleImageChange = (index: number, e: any) => {
-  //   const { value } = e.target;
-  //   const newImages = [...business.images];
-  //   newImages[index] = value;
-  //   setBusiness({ ...business, images: newImages });
-  // };
-  const handleFileChange = async (index: number, e: any) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('image', file);
-
-    try {
-      const response = await axios.post(
-        'http://localhost:8000/api/upload',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      console.log('Server response:', response.data);
-      const data = response.data;
-      console.log(data);
-
-      if (data && data.imageUrl) {
-        const newImages = [...business.images];
-        newImages[index] = data.imageUrl; // Update the image URL after upload
-        setBusiness({ ...business, images: newImages });
-      } else {
-        console.error('No imageUrl in response', data);
-      }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
+  const handleImageChange = (index: number, e: any) => {
+    const { value } = e.target;
+    const newImages = [...business.images];
+    newImages[index] = value;
+    setBusiness({ ...business, images: newImages });
   };
+
+  // const handleFileChange = async (index: number, e: any) => {
+  //   const file = e.target.files[0];
+  //   const formData = new FormData();
+  //   formData.append('image', file);
+
+  //   try {
+  //     const response = await axios.post(
+  //       'http://localhost:8000/api/upload',
+  //       formData,
+  //       {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data',
+  //         },
+  //       }
+  //     );
+  //     console.log('Server response:', response.data);
+  //     const data = response.data;
+  //     console.log(data);
+
+  //     if (data && data.imageUrl) {
+  //       const newImages = [...business.images];
+  //       newImages[index] = data.imageUrl; // Update the image URL after upload
+  //       setBusiness({ ...business, images: newImages });
+  //     } else {
+  //       console.error('No imageUrl in response', data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error uploading file:', error);
+  //   }
+  // };
 
   const addImage = () => {
     setBusiness({ ...business, images: [...business.images, ''] });
@@ -243,9 +244,9 @@ const CreateBusinessForm = () => {
         {business.images.map((image, index) => (
           <div key={index} className="mb-2">
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileChange(index, e)}
+              type="text"
+              value={image}
+              onChange={(e) => handleImageChange(index, e)}
               className="w-full p-2 border rounded-md"
             />
           </div>
