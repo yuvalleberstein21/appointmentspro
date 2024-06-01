@@ -3,6 +3,9 @@ import {
   CREATE_BUSINESS_FAIL,
   CREATE_BUSINESS_REQUEST,
   CREATE_BUSINESS_SUCCESS,
+  DELETE_BUSINESS_FAIL,
+  DELETE_BUSINESS_REQUEST,
+  DELETE_BUSINESS_SUCCESS,
   EDIT_BUSINESS_FAIL,
   EDIT_BUSINESS_REQUEST,
   EDIT_BUSINESS_SUCCESS,
@@ -159,7 +162,8 @@ export const userBusinesessAction =
   };
 
 export const editBusinesessAction =
-  (id: string, business: Business) => async (dispatch: any, getState: any) => {
+  (id: string | undefined, business: Business) =>
+  async (dispatch: any, getState: any) => {
     try {
       dispatch({ type: EDIT_BUSINESS_REQUEST });
 
@@ -192,6 +196,46 @@ export const editBusinesessAction =
     } catch (error: any) {
       dispatch({
         type: EDIT_BUSINESS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+      throw new Error(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+    }
+  };
+
+export const deleteBusinesessAction =
+  (businessId: string | undefined) => async (dispatch: any, getState: any) => {
+    try {
+      dispatch({ type: DELETE_BUSINESS_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/business/${businessId}`,
+        config
+      );
+      dispatch({
+        type: DELETE_BUSINESS_SUCCESS,
+        payload: businessId,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: DELETE_BUSINESS_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

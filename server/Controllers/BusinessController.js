@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const Business = require("../models/businessModel");
+const Appointment = require("../models/appointmentModel");
 const Service = require('../models/serviceModel');
 const User = require("../models/userModel");
 const fs = require('fs');
@@ -153,10 +154,47 @@ const getUserBusinesses = async (req, res) => {
     }
 };
 
+const deleteBusiness = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const businessId = req.params.id;
+
+        console.log(`User ID: ${userId}`);
+        console.log(`Business ID: ${businessId}`);
+        if (!userId) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        // Find the business to ensure it exists and belongs to the user
+        const business = await Business.findOne({ _id: businessId, owner: userId });
+        console.log(`Business Found: ${business}`);
+        if (!business) {
+            return res.status(404).json({ error: 'Business not found or not authorized' });
+        }
+
+        // Delete the business
+        await Business.findByIdAndDelete(businessId);
+
+        // Delete associated appointments
+        await Appointment.deleteMany({ business: businessId });
+
+        // Remove the business from the user's businesses array
+        await User.updateOne(
+            { _id: userId },
+            { $pull: { businesses: businessId } } // $pull removes the businessId from the businesses array
+        );
+
+        res.json({ message: 'Business and associated appointments deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 module.exports = {
     getAllBusinesses,
     createBusiness,
     getBusiness,
     updateBusiness,
-    getUserBusinesses
+    getUserBusinesses,
+    deleteBusiness
 };

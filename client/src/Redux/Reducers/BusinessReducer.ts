@@ -2,6 +2,9 @@ import {
   CREATE_BUSINESS_FAIL,
   CREATE_BUSINESS_REQUEST,
   CREATE_BUSINESS_SUCCESS,
+  DELETE_BUSINESS_FAIL,
+  DELETE_BUSINESS_REQUEST,
+  DELETE_BUSINESS_SUCCESS,
   EDIT_BUSINESS_FAIL,
   EDIT_BUSINESS_REQUEST,
   EDIT_BUSINESS_SUCCESS,
@@ -16,10 +19,13 @@ import {
   GET_USER_BUSINESS_SUCCESS,
 } from '../Constants/BusinessConstant';
 
-export const getAllBusinessReducer = (state = {}, action: any) => {
+export const getAllBusinessReducer = (
+  state = { businesses: [] },
+  action: any
+) => {
   switch (action.type) {
     case GET_ALL_BUSINESS_REQUEST:
-      return { loading: true };
+      return { loading: true, businesses: [] };
     case GET_ALL_BUSINESS_SUCCESS:
       return { loading: false, businesses: action.payload };
     case GET_ALL_BUSINESS_FAIL:
@@ -75,6 +81,19 @@ export const userBusinessReducer = (state = {}, action: any) => {
     case GET_USER_BUSINESS_SUCCESS:
       return { loading: false, business: action.payload };
     case GET_USER_BUSINESS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const deleteBusinessReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case DELETE_BUSINESS_REQUEST:
+      return { loading: true };
+    case DELETE_BUSINESS_SUCCESS:
+      return { loading: false, success: true };
+    case DELETE_BUSINESS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

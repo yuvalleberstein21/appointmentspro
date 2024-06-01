@@ -102,8 +102,10 @@ const CreateBusinessForm = () => {
     e.preventDefault();
     try {
       const createdBusiness = dispatch(createBusinesessAction(business));
-      if (createdBusiness) {
+      if (createdBusiness && createdBusiness._id) {
         navigate(`/business/${createdBusiness.id}`);
+      } else {
+        console.error('Business creation failed: No ID returned');
       }
     } catch (error) {
       console.log(error);
@@ -249,6 +251,7 @@ const CreateBusinessForm = () => {
               onChange={(e) => handleImageChange(index, e)}
               className="w-full p-2 border rounded-md"
             />
+            <img src={image} alt={business.name} height="100" width="100" />
           </div>
         ))}
         <button

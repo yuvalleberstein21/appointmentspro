@@ -33,12 +33,9 @@ const EditBusinessPage = () => {
         <div>{error}</div>
       ) : (
         <>
-          <div
-            dir="rtl"
-            className="w-full py-5 bg-slate-100 flex justify-center"
-          >
+          <div dir="rtl" className="w-full py-5 flex justify-center">
             <div className="w-full max-w-3xl">
-              <h1 className="text-2xl font-bold text-gray-800 mb-5">
+              <h1 className="text-2xl font-bold text-gray-800 text-center mb-5">
                 בחר את העסק שאותו ברצונך לערוך
               </h1>
               {business?.map((b: Business) => (
