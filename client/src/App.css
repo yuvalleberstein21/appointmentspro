@@ -45,7 +45,7 @@ body {
   height: 30px;
   border-radius: 50%;
   border: 10px solid #ddd;
-  border-top-color: rgb(174, 218, 110);
+  border-top-color: #3b82f6;
   animation: loading 1s linear infinite;
 }
 @keyframes loading {

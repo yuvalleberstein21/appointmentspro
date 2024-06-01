@@ -70,7 +70,7 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
             </div>
 
             {/* Bottom image */}
-            <div className="relative mx-4 gap-3 mt-1 overflow-hidden text-gray-700 bg-slate-100 shadow-lg bg-clip-border rounded-b-xl h-40 mb-3">
+            <div className="relative mx-4 gap-3 mt-1 overflow-hidden text-gray-700 bg-slate-100  bg-clip-border rounded-b-xl h-40 mb-3">
               <img
                 src={business?.images[4]}
                 alt={business?.name}

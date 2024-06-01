@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import EditBusinessForm from '../components/Business/EditBusinessForm';
+import EditBusinessForm from '../components/Business/EditBusiness/EditBusinessForm';
 import { useEffect, useState } from 'react';
 import { userBusinesessAction } from '../Redux/Actions/BusinessAction';
 import { Business, EditBusinessFormProps } from '../Helpers/BusinessType';
@@ -53,7 +53,6 @@ const EditBusinessPage = () => {
               ))}
             </div>
           </div>
-
           <EditBusinessForm selectedBusiness={selectedBusiness} />
         </>
       )}
