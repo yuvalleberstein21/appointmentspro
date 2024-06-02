@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { userBusinesessAction } from '../Redux/Actions/BusinessAction';
 import { Business, EditBusinessFormProps } from '../Helpers/BusinessType';
 import Loading from '../Utils/Loading';
+import { Link } from 'react-router-dom';
 
 const EditBusinessPage = () => {
   const userBusiness = useSelector((state: any) => state.userBusiness);
@@ -30,7 +31,12 @@ const EditBusinessPage = () => {
       {loading ? (
         <Loading />
       ) : error ? (
-        <div>{error}</div>
+        <div className="mx-5 py-5">
+          {error}{' '}
+          <Link to={'/'} className="text-blue-500">
+            LOGIN
+          </Link>
+        </div>
       ) : (
         <>
           <div dir="rtl" className="w-full py-5 flex justify-center">

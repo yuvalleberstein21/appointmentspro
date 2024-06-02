@@ -19,7 +19,7 @@ const authenticate = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        return res.status(401).send({ message: 'Access Denied: Invalid Token' });
+        return res.status(401).send({ message: 'Access Denied: Invalid Token ' });
     }
 };
 

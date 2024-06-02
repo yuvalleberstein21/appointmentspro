@@ -6,6 +6,7 @@ const connectDatabase = require('./config/MongoDB');
 const authRoutes = require('./Routes/AuthRoutes');
 const businessRoutes = require('./Routes/BusinessRoutes');
 const uploadRoutes = require('./Routes/UploadRoutes');
+const appointmentRoutes = require('./Routes/AppointmentRoutes');
 
 dotenv.config();
 connectDatabase();
@@ -31,6 +32,7 @@ app.use((err, req, res, next) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/business', businessRoutes);
+app.use('/api/appointment', appointmentRoutes);
 app.use('/api/upload', uploadRoutes);
 
 
