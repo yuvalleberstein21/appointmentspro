@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Business } from '../../../Helpers/BusinessType';
-import Service from '../../../Helpers/ServiceType';
 
 interface BusinessData {
   business: Business;
@@ -13,9 +12,14 @@ const Services: React.FC<BusinessData> = ({
   onServiceSelect,
   onNextStep,
 }) => {
+  const [activeServiceId, setActiveServiceId] = useState<string | null>(null);
+
   const handleServiceClick = (service: any) => {
+    setActiveServiceId(service._id);
     onServiceSelect(service);
   };
+
+  console.log('Active Service ID:', activeServiceId);
 
   return (
     <div
@@ -32,7 +36,9 @@ const Services: React.FC<BusinessData> = ({
         {business?.services.map((service, index) => (
           <div
             key={service._id}
-            className="bg-white p-3 flex flex-col rounded-md cursor-pointer hover:bg-lime-100"
+            className={`p-3 flex flex-col rounded-md cursor-pointer hover:bg-lime-100 ${
+              activeServiceId === service._id ? 'bg-lime-100' : 'bg-white'
+            }`}
             dir="rtl"
             onClick={() => handleServiceClick(service)}
           >

@@ -53,3 +53,23 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.react-datepicker__day--selected {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.react-datepicker__day--disabled {
+  color: #ccc !important;
+  pointer-events: none;
+}
+
+.react-datepicker__day--today {
+  font-weight: bold;
+  color: #4caf50;
+}
+.react-datepicker__day {
+  font-size: 0.8rem;
+  font-family: 'Varela Round', sans-serif;
+  padding: 3px;
+}

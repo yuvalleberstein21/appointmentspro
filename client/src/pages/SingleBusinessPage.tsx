@@ -45,7 +45,7 @@ const SingleBusinessPage = () => {
     setStep((prevStep) => prevStep - 1);
   };
 
-  // console.log(selectedService);
+  console.log(selectedService);
 
   return (
     <>
