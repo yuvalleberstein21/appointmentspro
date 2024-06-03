@@ -55,7 +55,7 @@ body {
 }
 
 .react-datepicker__day--selected {
-  background-color: #4caf50 !important;
+  background-color: #bef264 !important;
   color: white !important;
 }
 
@@ -72,4 +72,8 @@ body {
   font-size: 0.8rem;
   font-family: 'Varela Round', sans-serif;
   padding: 3px;
+  margin: 5px !important;
+}
+.react-datepicker__header {
+  background-color: #d9f99d !important;
 }

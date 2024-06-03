@@ -79,6 +79,7 @@ const SingleBusinessPage = () => {
                 <Hours
                   business={business}
                   selectedService={selectedService}
+                  selectedDate={selectedDate}
                   onNextStep={handleNextStep}
                   onPrevStep={handlePrevStep}
                 />

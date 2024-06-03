@@ -3,8 +3,10 @@ const Hours: React.FC<HoursProps> = ({
   selectedService,
   onNextStep,
   onPrevStep,
+  selectedDate,
 }) => {
-  console.log(business);
+  console.log(`selected serviced`);
+  console.log(`selected date : ${selectedDate}`);
   return (
     <div
       className="card relative max-w-md p-8 bg-slate-100 rounded-lg w-full h-full mb-8 mt-5 mx-7"

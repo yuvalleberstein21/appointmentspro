@@ -24,13 +24,15 @@ const Dates: React.FC<BusinessData> = ({
     setSelectedDate(date);
   };
 
+  console.log(selectedDate);
+
   return (
     <>
       <div
         className="card relative max-w-md p-8 bg-slate-100 rounded-lg w-full h-full mb-8 mt-5 mx-7"
         dir="rtl"
       >
-        <div className="flex flex-col items-center mt-5 p-5">
+        <div className="flex flex-col items-center mt-5">
           <label htmlFor="date-picker" className="mb-2 text-lg text-gray-700">
             בחר תאריך :
           </label>
@@ -42,7 +44,7 @@ const Dates: React.FC<BusinessData> = ({
             minDate={new Date()}
             dateFormat="dd/MM/yyyy"
             className="p-2 border-none rounded-md w-full max-w-xs text-md"
-            calendarClassName="border border-none rounded-md p-10"
+            calendarClassName="border border-none rounded-md"
             showPopperArrow={false}
             locale="he" // Set the locale to Hebrew
             inline
