@@ -1,6 +1,6 @@
 import { Business } from './BusinessType';
 
-interface Service {
+export interface Service {
   business?: Business;
   _id: string;
   name: string;
@@ -8,11 +8,12 @@ interface Service {
   serviceTime: number;
 }
 
-interface HoursProps {
-  business?: Business | null;
-  selectedService: Service | null;
+export interface HoursProps {
+  business?: Business | any;
+  selectedService: Service;
+  selectedDate: Date;
+  selectedHour: string;
+  onHourSelect: (hour: string) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
 }
-
-export default Service;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { HoursProps } from '../../../Helpers/ServiceType';
 
 const Hours: React.FC<HoursProps> = ({
   business,
@@ -10,15 +10,11 @@ const Hours: React.FC<HoursProps> = ({
 }) => {
   const handleHourSelect = (hour: string) => {
     onHourSelect(hour);
-    console.log(hour);
   };
-  console.log(`selected service : ${selectedService.name}`);
-  // console.log(`selected date : ${selectedDate}`);
 
   const selectedDay = selectedDate
     .toLocaleDateString('en-US', { weekday: 'long' })
     .toLowerCase();
-  console.log(`selected day : ${selectedDay}`);
 
   const workDay = business.workingDays.find(
     (work: any) => work.day === selectedDay
@@ -72,8 +68,6 @@ const Hours: React.FC<HoursProps> = ({
       currentMinute = currentMinute % 60;
     }
   }
-
-  console.log(availableSlots);
 
   return (
     <div

@@ -7,6 +7,7 @@ import Loading from '../Utils/Loading';
 import Services from '../components/Business/SingleBusiness/Services';
 import Hours from '../components/Business/SingleBusiness/Hours';
 import Dates from '../components/Business/SingleBusiness/Dates';
+import Summary from '../components/Business/SingleBusiness/Summary';
 
 const SingleBusinessPage = () => {
   const [selectedService, setSelectedService] = useState(null);
@@ -49,7 +50,6 @@ const SingleBusinessPage = () => {
     setStep((prevStep) => prevStep - 1);
   };
 
-  console.log(business);
   return (
     <>
       <div className="flex flex-col gap-4 mx-5">
@@ -85,6 +85,15 @@ const SingleBusinessPage = () => {
                   selectedDate={selectedDate}
                   onHourSelect={handleHourSelect}
                   onNextStep={handleNextStep}
+                  onPrevStep={handlePrevStep}
+                />
+              )}
+              {step === 4 && (
+                <Summary
+                  selectedService={selectedService}
+                  selectedDate={selectedDate}
+                  selectedHour={selectedHour}
+                  business={business}
                   onPrevStep={handlePrevStep}
                 />
               )}
