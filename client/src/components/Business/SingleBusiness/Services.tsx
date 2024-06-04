@@ -19,8 +19,6 @@ const Services: React.FC<BusinessData> = ({
     onServiceSelect(service);
   };
 
-  console.log('Active Service ID:', activeServiceId);
-
   return (
     <div
       className="card relative max-w-md p-8 bg-slate-100 rounded-lg w-full h-full mb-8 mt-5 mx-7"

@@ -7,24 +7,23 @@ import he from 'date-fns/locale/he';
 
 interface BusinessData {
   business: Business;
-  onDateSelect: (data: BusinessData) => void;
+  onDateSelect: (data: Date) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
 }
 // Register the Hebrew locale with react-datepicker
 registerLocale('he', he);
 const Dates: React.FC<BusinessData> = ({
-  business,
   onNextStep,
   onPrevStep,
+  onDateSelect,
 }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date: Date) => {
+    onDateSelect(date);
     setSelectedDate(date);
   };
-
-  console.log(selectedDate);
 
   return (
     <>

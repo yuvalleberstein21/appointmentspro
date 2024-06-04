@@ -11,6 +11,7 @@ import Dates from '../components/Business/SingleBusiness/Dates';
 const SingleBusinessPage = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedHour, setSelectedHour] = useState(null);
   const [step, setStep] = useState(1);
 
   const getSingleBusiness = useSelector(
@@ -36,6 +37,9 @@ const SingleBusinessPage = () => {
   const handleDateSelect = (date: any) => {
     setSelectedDate(date);
   };
+  const handleHourSelect = (hour: any) => {
+    setSelectedHour(hour);
+  };
 
   const handleNextStep = () => {
     setStep((prevStep) => prevStep + 1);
@@ -45,8 +49,7 @@ const SingleBusinessPage = () => {
     setStep((prevStep) => prevStep - 1);
   };
 
-  console.log(selectedService);
-
+  console.log(business);
   return (
     <>
       <div className="flex flex-col gap-4 mx-5">
@@ -80,6 +83,7 @@ const SingleBusinessPage = () => {
                   business={business}
                   selectedService={selectedService}
                   selectedDate={selectedDate}
+                  onHourSelect={handleHourSelect}
                   onNextStep={handleNextStep}
                   onPrevStep={handlePrevStep}
                 />
