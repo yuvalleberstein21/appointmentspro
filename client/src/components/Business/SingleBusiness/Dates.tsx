@@ -23,6 +23,7 @@ const Dates: React.FC<BusinessData> = ({
   const handleDateChange = (date: Date) => {
     onDateSelect(date);
     setSelectedDate(date);
+    onNextStep();
   };
 
   return (
@@ -50,18 +51,12 @@ const Dates: React.FC<BusinessData> = ({
           />
         </div>
 
-        <div className="flex justify-between items-center mt-8 gap-1">
+        <div className="mt-8">
           <button
             className="text-md bg-stone-900 text-white rounded-md w-full p-2"
             onClick={onPrevStep}
           >
             חזור
-          </button>
-          <button
-            className="text-md bg-stone-900 text-white rounded-md w-full p-2"
-            onClick={onNextStep}
-          >
-            המשך
           </button>
         </div>
       </div>

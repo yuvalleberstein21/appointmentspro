@@ -6,6 +6,7 @@ const Summary: React.FC<HoursProps> = ({
   selectedHour,
   business,
   onPrevStep,
+  onSubmit,
 }) => {
   console.log(`Summary selected service : ${selectedService.name}`);
   console.log(`Summary selected Date : ${selectedDate}`);
@@ -26,9 +27,20 @@ const Summary: React.FC<HoursProps> = ({
           {selectedHour}
         </span>
       </div>
-      <button className="flex justify-center text-center w-full mt-7 text-md bg-stone-900 text-white rounded-md p-2">
-        קביעת תור
-      </button>
+      <div className="flex justify-between text-center gap-2">
+        <button
+          className="w-full mt-7 text-md bg-stone-900 text-white rounded-md p-2"
+          onClick={onPrevStep}
+        >
+          חזור
+        </button>
+        <button
+          className="w-full mt-7 text-md bg-stone-900 text-white rounded-md p-2"
+          onClick={onSubmit}
+        >
+          קביעת תור
+        </button>
+      </div>
     </div>
   );
 };

@@ -10,6 +10,7 @@ const Hours: React.FC<HoursProps> = ({
 }) => {
   const handleHourSelect = (hour: string) => {
     onHourSelect(hour);
+    onNextStep();
   };
 
   const selectedDay = selectedDate
@@ -103,12 +104,12 @@ const Hours: React.FC<HoursProps> = ({
         >
           חזור
         </button>
-        <button
+        {/* <button
           className="text-md bg-stone-900 text-white rounded-md w-full p-2"
           onClick={onNextStep}
         >
           המשך
-        </button>
+        </button> */}
       </div>
     </div>
   );

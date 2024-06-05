@@ -16,4 +16,5 @@ export interface HoursProps {
   onHourSelect: (hour: string) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
+  onSubmit: () => void;
 }
