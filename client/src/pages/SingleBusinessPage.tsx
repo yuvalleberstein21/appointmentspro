@@ -8,7 +8,10 @@ import Services from '../components/Business/SingleBusiness/Services';
 import Hours from '../components/Business/SingleBusiness/Hours';
 import Dates from '../components/Business/SingleBusiness/Dates';
 import Summary from '../components/Business/SingleBusiness/Summary';
-import { createAppointmentAction } from '../Redux/Actions/AppointmentAction';
+import {
+  createAppointmentAction,
+  removeSlot,
+} from '../Redux/Actions/AppointmentAction';
 
 const SingleBusinessPage = () => {
   const [selectedService, setSelectedService] = useState(null);
@@ -20,9 +23,6 @@ const SingleBusinessPage = () => {
     (state: any) => state.getSingleBusiness
   );
   const { loading, error, business } = getSingleBusiness;
-
-  const userLogin = useSelector((state: any) => state.userLogin);
-  const { userInfo } = userLogin;
 
   const dispatch = useDispatch<any>();
   const businessId = useParams();
@@ -56,7 +56,7 @@ const SingleBusinessPage = () => {
 
   const handleSubmit = async () => {
     try {
-      dispatch(
+      await dispatch(
         createAppointmentAction(
           businessId.id,
           selectedService._id,
@@ -105,6 +105,7 @@ const SingleBusinessPage = () => {
                   onHourSelect={handleHourSelect}
                   onNextStep={handleNextStep}
                   onPrevStep={handlePrevStep}
+                  businessId={businessId.id}
                 />
               )}
               {step === 4 && (

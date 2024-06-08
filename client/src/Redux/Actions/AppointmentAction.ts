@@ -3,12 +3,15 @@ import {
   CREATE_APPOINTMENT_FAIL,
   CREATE_APPOINTMENT_REQUEST,
   CREATE_APPOINTMENT_SUCCESS,
+  GET_BUSINESS_APPOINTMENT_FAIL,
+  GET_BUSINESS_APPOINTMENT_REQUEST,
+  GET_BUSINESS_APPOINTMENT_SUCCESS,
 } from '../Constants/AppointmentConstant';
 
 export const createAppointmentAction =
   (
-    businessId: string,
-    serviceId: string,
+    business: string,
+    service: string,
     appointmentDate: Date,
     appointmentTime: string
   ) =>
@@ -33,7 +36,7 @@ export const createAppointmentAction =
 
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/appointment/createappointment`,
-        { businessId, serviceId, appointmentDate, appointmentTime },
+        { business, service, appointmentDate, appointmentTime },
         config
       );
       dispatch({
@@ -43,6 +46,36 @@ export const createAppointmentAction =
     } catch (error: any) {
       dispatch({
         type: CREATE_APPOINTMENT_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+      throw new Error(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+    }
+  };
+
+export const businessAppointmentAction =
+  (businessId: string) => async (dispatch: any) => {
+    try {
+      dispatch({ type: GET_BUSINESS_APPOINTMENT_REQUEST });
+
+      const { data } = await axios.get(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/appointment/businessAppointment/${businessId}`
+      );
+      dispatch({
+        type: GET_BUSINESS_APPOINTMENT_SUCCESS,
+        payload: data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: GET_BUSINESS_APPOINTMENT_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

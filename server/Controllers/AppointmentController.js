@@ -13,13 +13,6 @@ const createAppointment = async (req, res) => {
 
         const { business, service, appointmentDate, appointmentTime } = req.body;
 
-        // Log the contents of req.body for debugging
-        console.log("req.body:", req.body);
-        console.log("user._id:", userId);
-        console.log("business:", business);
-        console.log("service:", service);
-        console.log("appointmentDate:", appointmentDate);
-        console.log("appointmentTime:", appointmentTime);
 
         // Validate input data
         if (!business || !service || !appointmentDate || !appointmentTime) {
@@ -59,4 +52,24 @@ const createAppointment = async (req, res) => {
     }
 };
 
-module.exports = { createAppointment };
+const getBusinessAppointment = async (req, res) => {
+    try {
+        const businessId = req.params.id;
+
+
+
+        const appointments = await Appointment.find({ business: businessId })
+
+        if (appointments.length > 0) {
+            res.json(appointments);
+        } else {
+            res.status(404).json({ error: 'No appointments found for this business' });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while creating the appointment' });
+    }
+};
+
+module.exports = { createAppointment, getBusinessAppointment };

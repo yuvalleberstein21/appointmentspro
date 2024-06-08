@@ -13,6 +13,7 @@ export interface HoursProps {
   selectedService: Service;
   selectedDate: Date;
   selectedHour: string;
+  businessId: any;
   onHourSelect: (hour: string) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
