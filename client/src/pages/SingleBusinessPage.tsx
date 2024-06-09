@@ -10,7 +10,7 @@ import Dates from '../components/Business/SingleBusiness/Dates';
 import Summary from '../components/Business/SingleBusiness/Summary';
 import {
   createAppointmentAction,
-  removeSlot,
+  userAppointmentAction,
 } from '../Redux/Actions/AppointmentAction';
 
 const SingleBusinessPage = () => {
@@ -64,6 +64,8 @@ const SingleBusinessPage = () => {
           selectedHour
         )
       );
+      dispatch(userAppointmentAction(businessId.id));
+      setStep(1);
     } catch (error) {
       console.log(error);
     }

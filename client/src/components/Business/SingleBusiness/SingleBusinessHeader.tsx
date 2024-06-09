@@ -1,12 +1,30 @@
 import { Fragment } from 'react/jsx-runtime';
 import { Business } from '../../../Helpers/BusinessType';
 import AppointmentList from '../AppointmentList';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { userAppointmentAction } from '../../../Redux/Actions/AppointmentAction';
 
 interface BusinessData {
   business: Business;
 }
 
 const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
+  const userAppointment = useSelector((state: any) => state.userAppointment);
+  const { appointment } = userAppointment;
+
+  const dispatch = useDispatch<any>();
+  const businessId = useParams();
+
+  useEffect(() => {
+    try {
+      dispatch(userAppointmentAction(businessId.id));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
+
   return (
     <Fragment>
       <div className="flex flex-col md:flex-row md:gap-4">
@@ -78,7 +96,7 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
               />
             </div>
           </div>
-          <AppointmentList />
+          <AppointmentList appointments={appointment} />
         </div>
       </div>
     </Fragment>

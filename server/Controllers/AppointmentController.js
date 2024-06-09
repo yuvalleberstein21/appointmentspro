@@ -57,7 +57,6 @@ const getBusinessAppointment = async (req, res) => {
         const businessId = req.params.id;
 
 
-
         const appointments = await Appointment.find({ business: businessId })
 
         if (appointments.length > 0) {
@@ -72,4 +71,35 @@ const getBusinessAppointment = async (req, res) => {
     }
 };
 
-module.exports = { createAppointment, getBusinessAppointment };
+const getUserAppointment = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const { businessId } = req.query;
+        const query = { user: userId };
+        if (businessId) {
+            query.business = businessId;
+        }
+
+        const appointments = await Appointment.find(query)
+            .populate('business')
+            .populate('service');
+
+
+        if (appointments.length === 0) {
+            return res.status(200).json({ message: 'No appointments found', appointments: [] });
+        }
+
+        return res.status(200).json(appointments);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while creating the appointment' });
+    }
+};
+
+module.exports = { createAppointment, getBusinessAppointment, getUserAppointment };
