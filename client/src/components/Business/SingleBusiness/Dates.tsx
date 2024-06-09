@@ -14,6 +14,7 @@ interface BusinessData {
 // Register the Hebrew locale with react-datepicker
 registerLocale('he', he);
 const Dates: React.FC<BusinessData> = ({
+  business,
   onNextStep,
   onPrevStep,
   onDateSelect,
@@ -24,6 +25,21 @@ const Dates: React.FC<BusinessData> = ({
     onDateSelect(date);
     setSelectedDate(date);
     onNextStep();
+  };
+
+  console.log(business);
+
+  const workingDays = business.workingDays.map((work: any) => work.day);
+
+  const isWorkingDay = (date: Date) => {
+    const day = date
+      .toLocaleDateString('en-US', { weekday: 'long' })
+      .toLowerCase();
+    return workingDays.includes(day);
+  };
+
+  const getDayClassName = (date: Date) => {
+    return isWorkingDay(date) ? 'working-day' : 'non-working-day';
   };
 
   return (
@@ -46,6 +62,7 @@ const Dates: React.FC<BusinessData> = ({
             className="p-2 border-none rounded-md w-full max-w-xs text-md"
             calendarClassName="border border-none rounded-md"
             showPopperArrow={false}
+            dayClassName={getDayClassName}
             locale="he" // Set the locale to Hebrew
             inline
           />

@@ -15,9 +15,7 @@ const Hours: React.FC<HoursProps> = ({
   const businessAppointment = useSelector(
     (state: any) => state.businessAppointment
   );
-  const { appointment, loading } = businessAppointment;
-
-  console.log(appointment);
+  const { appointment } = businessAppointment;
 
   const dispatch = useDispatch<any>();
 
@@ -42,16 +40,15 @@ const Hours: React.FC<HoursProps> = ({
     }
   }, [dispatch]);
 
-  const isHourActive = (hour: string) => {
+  const isHourBooked = (hour: string) => {
     if (appointment) {
-      const chosenDate = new Date(selectedDate);
-      const appointmentsForDate = appointment.filter((appoint: any) => {
-        const appointmentDate = new Date(appoint.date);
-        return appointmentDate.toDateString() === chosenDate.toDateString();
-      });
+      const chosenDate = selectedDate.toISOString().slice(0, 10);
 
-      return appointmentsForDate.some((appointment: any) => {
-        return appointment.startTime === hour;
+      return appointment.some((appoint: any) => {
+        const appointmentDate = appoint.appointmentDate.slice(0, 10);
+        return (
+          appointmentDate === chosenDate && appoint.appointmentTime === hour
+        );
       });
     }
     return false;
@@ -63,7 +60,6 @@ const Hours: React.FC<HoursProps> = ({
         className="card relative max-w-md p-8 bg-slate-100 rounded-lg w-full h-full mb-8 mt-5 mx-7"
         dir="rtl"
       >
-        {/* title */}
         <span className="bg-lime-400 absolute top-2 w-10 p-1 rounded-lg"></span>
         <h1 className="text-2xl justify-center flex items-center">בחר שעה</h1>
         <div className="flex flex-col gap-3 mt-4" dir="rtl">
@@ -88,7 +84,7 @@ const Hours: React.FC<HoursProps> = ({
   const endHour = parseInt(workDay.endHour.split(':')[0], 10);
   const endMinute = parseInt(workDay.endHour.split(':')[1], 10);
 
-  const availableSlots = [];
+  const availableSlots: string[] = [];
   let currentHour = startHour;
   let currentMinute = startMinute;
 
@@ -100,22 +96,9 @@ const Hours: React.FC<HoursProps> = ({
     const minuteStr = currentMinute.toString().padStart(2, '0');
     const time = `${hourStr}:${minuteStr}`;
 
-    // Check if the current time slot is already booked
-    if (
-      appointment &&
-      appointment.appointmentDate === selectedDate.toISOString().slice(0, 10) && // Compare only the date part
-      appointment.appointmentTime === time
-    ) {
-      // Skip this time slot if it's already booked
-      currentMinute += serviceTime;
-      if (currentMinute >= 60) {
-        currentHour += Math.floor(currentMinute / 60);
-        currentMinute = currentMinute % 60;
-      }
-      continue;
+    if (!isHourBooked(time)) {
+      availableSlots.push(time);
     }
-
-    availableSlots.push(time);
 
     currentMinute += serviceTime;
     if (currentMinute >= 60) {
@@ -138,7 +121,7 @@ const Hours: React.FC<HoursProps> = ({
             {availableSlots.map((slot, index) => (
               <button
                 key={index}
-                className={isHourActive(slot) ? 'active' : 'inactive'}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {
                   handleHourSelect(slot);
                 }}
@@ -162,4 +145,5 @@ const Hours: React.FC<HoursProps> = ({
     </div>
   );
 };
+
 export default Hours;

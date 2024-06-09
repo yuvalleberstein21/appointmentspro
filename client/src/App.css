@@ -77,6 +77,7 @@ body {
 .react-datepicker__header {
   background-color: #d9f99d !important;
 }
-.button.active {
-  display: none;
+.non-working-day {
+  color: #ccc !important;
+  pointer-events: none;
 }
