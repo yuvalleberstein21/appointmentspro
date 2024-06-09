@@ -12,7 +12,7 @@ interface BusinessData {
 
 const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
   const userAppointment = useSelector((state: any) => state.userAppointment);
-  const { appointment } = userAppointment;
+  const { appointment, loading } = userAppointment;
 
   const dispatch = useDispatch<any>();
   const businessId = useParams();
@@ -96,7 +96,7 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
               />
             </div>
           </div>
-          <AppointmentList appointments={appointment} />
+          <AppointmentList appointments={appointment} loading={loading} />
         </div>
       </div>
     </Fragment>

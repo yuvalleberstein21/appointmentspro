@@ -9,4 +9,5 @@ export interface AppointmentData {
   service: Service;
   user: string;
   appointments: AppointmentData[];
+  loading: boolean;
 }

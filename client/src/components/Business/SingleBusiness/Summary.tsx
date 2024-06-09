@@ -8,11 +8,6 @@ const Summary: React.FC<HoursProps> = ({
   onPrevStep,
   onSubmit,
 }) => {
-  console.log(`Summary selected service : ${selectedService.name}`);
-  console.log(`Summary selected Date : ${selectedDate}`);
-  console.log(`Summary selected Hour : ${selectedHour}`);
-  console.log(`Business Data : ${business.name}`);
-
   return (
     <div
       className="card relative max-w-md p-8 bg-slate-100 rounded-lg w-full h-full mb-8 mt-5 mx-7"
