@@ -3,6 +3,9 @@ import {
   CREATE_APPOINTMENT_FAIL,
   CREATE_APPOINTMENT_REQUEST,
   CREATE_APPOINTMENT_SUCCESS,
+  DELETE_APPOINTMENT_FAIL,
+  DELETE_APPOINTMENT_REQUEST,
+  DELETE_APPOINTMENT_SUCCESS,
   GET_BUSINESS_APPOINTMENT_FAIL,
   GET_BUSINESS_APPOINTMENT_REQUEST,
   GET_BUSINESS_APPOINTMENT_SUCCESS,
@@ -126,6 +129,54 @@ export const userAppointmentAction =
     } catch (error: any) {
       dispatch({
         type: GET_USER_APPOINTMENT_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+      throw new Error(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+    }
+  };
+
+export const deleteAppointmentAction =
+  (appointmentId: string | undefined) =>
+  async (dispatch: any, getState: any) => {
+    try {
+      dispatch({ type: DELETE_APPOINTMENT_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      if (!userInfo || !userInfo.token) {
+        throw new Error('User not authenticated');
+      }
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.delete(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/appointment/userAppointment/${appointmentId}`,
+        config
+      );
+
+      dispatch({
+        type: DELETE_APPOINTMENT_SUCCESS,
+        payload: data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: DELETE_APPOINTMENT_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

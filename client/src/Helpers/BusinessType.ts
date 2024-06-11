@@ -17,5 +17,5 @@ export interface Business {
 }
 
 export interface EditBusinessFormProps {
-  selectedBusiness: Business;
+  selectedBusiness: Business | any;
 }

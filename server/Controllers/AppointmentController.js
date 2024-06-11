@@ -56,7 +56,6 @@ const getBusinessAppointment = async (req, res) => {
     try {
         const businessId = req.params.id;
 
-
         const appointments = await Appointment.find({ business: businessId })
 
         if (appointments.length > 0) {
@@ -102,4 +101,26 @@ const getUserAppointment = async (req, res) => {
     }
 };
 
-module.exports = { createAppointment, getBusinessAppointment, getUserAppointment };
+const deleteAppointment = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const appointmentId = req.params.id;
+        const appointment = await Appointment.findOneAndDelete({ _id: appointmentId, user: userId });
+        if (appointment) {
+            res.status(200).send('Appointment deleted successfully')
+        } else {
+            res.status(404).send('Appointment not found');
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while creating the appointment' });
+    }
+};
+
+module.exports = { createAppointment, getBusinessAppointment, getUserAppointment, deleteAppointment };

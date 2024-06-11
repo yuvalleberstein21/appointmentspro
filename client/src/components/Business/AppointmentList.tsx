@@ -2,11 +2,29 @@ import { AppointmentData } from '../../Helpers/AppointmentType';
 import { formatDate } from '../../Utils/FormatDate';
 import { motion } from 'framer-motion';
 import Loading from '../../Utils/Loading';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  deleteAppointmentAction,
+  userAppointmentAction,
+} from '../../Redux/Actions/AppointmentAction';
+
+import { useParams } from 'react-router-dom';
 
 const AppointmentList: React.FC<AppointmentData> = ({
   appointments,
   loading,
 }) => {
+  const dispatch = useDispatch<any>();
+  const businessId = useParams();
+
+  const handleDelete = async (appointmentId: string) => {
+    try {
+      await dispatch(deleteAppointmentAction(appointmentId));
+      dispatch(userAppointmentAction(businessId.id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       {loading ? (
@@ -38,7 +56,10 @@ const AppointmentList: React.FC<AppointmentData> = ({
                       {' '}
                       {appointment.service.name}
                     </p>
-                    <button className="mt-2 bg-red-500 text-white p-1 rounded-md w-full">
+                    <button
+                      className="mt-2 bg-red-500 text-white p-1 rounded-md w-full"
+                      onClick={() => handleDelete(appointment._id)}
+                    >
                       ביטול
                     </button>
                   </div>

@@ -8,11 +8,13 @@ const businessRoutes = require('./Routes/BusinessRoutes');
 const uploadRoutes = require('./Routes/UploadRoutes');
 const appointmentRoutes = require('./Routes/AppointmentRoutes');
 
+
 dotenv.config();
 connectDatabase();
 
 const app = express();
 app.use(bodyParser.json());
+
 
 var corsOptions = {
     origin: '*',
