@@ -31,10 +31,10 @@ const AppointmentCarousel = () => {
               />
 
               <div dir="rtl">
-                <h2 className="text-lg bg-gray-400 bg-opacity-70 rounded-md p-1 mx-2 font-semibold absolute top-1 right-0 z-10 text-white">
+                <h2 className="text-lg bg-slate-300 bg-opacity-60 rounded-md p-1 mx-2 font-semibold absolute top-1 right-0 z-10 text-black">
                   {appointment.business.name}
                 </h2>
-                <p className="text-md bg-gray-400 bg-opacity-70 rounded-md p-1 mx-2 font-semibold absolute bottom-2 z-10 text-white">
+                <p className="text-md bg-slate-300 bg-opacity-60 rounded-md p-1 mx-2 font-semibold absolute bottom-2 z-10 text-black">
                   בתאריך {formatDate(appointment.appointmentDate)} בשעה{' '}
                   {appointment.appointmentTime}
                 </p>
