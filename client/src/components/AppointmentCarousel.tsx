@@ -10,7 +10,7 @@ const AppointmentCarousel = () => {
 
   return (
     <div
-      className="container mb-3 p-2 w-full"
+      className="mb-3 p-2 w-full"
       style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}
     >
       {loading ? (

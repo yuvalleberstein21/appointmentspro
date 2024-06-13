@@ -25,6 +25,8 @@ const AppointmentList: React.FC<AppointmentData> = ({
       console.log(error);
     }
   };
+
+  console.log(appointments);
   return (
     <>
       {loading ? (
@@ -47,6 +49,19 @@ const AppointmentList: React.FC<AppointmentData> = ({
                       {formatDate(appointment.appointmentDate)}
                     </p>
                     <p>{appointment.appointmentTime}</p>
+                    <p className="py-2 text-sm">
+                      {appointment.confirmed ? (
+                        <div dir="rtl">
+                          התור מאושר
+                          <i className="fa-solid fa-check m-1"></i>
+                        </div>
+                      ) : (
+                        <div dir="rtl">
+                          ממתין לבעל העסק
+                          <i className="fa-regular fa-clock m-1"></i>
+                        </div>
+                      )}
+                    </p>
                   </div>
                   <div>
                     <div className="uppercase tracking-wide text-sm text-lime-500 font-semibold">

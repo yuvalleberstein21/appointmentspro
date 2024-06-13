@@ -4,6 +4,11 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { AppointmentData } from '../../Helpers/AppointmentType';
 import Loading from '../../Utils/Loading';
 import axios from 'axios';
+import {
+  confirmAppointmentAction,
+  dashboardAppointmentAction,
+} from '../../Redux/Actions/AppointmentAction';
+import { useDispatch } from 'react-redux';
 
 const localizer = momentLocalizer(moment);
 const DashboardUi: React.FC<AppointmentData> = ({
@@ -11,35 +16,13 @@ const DashboardUi: React.FC<AppointmentData> = ({
   error,
   appointments,
 }) => {
-  const formattedAppointments =
-    appointments?.length > 0 &&
-    appointments.map((appointment) => {
-      // Format appointmentTime to match "HH:mm" format
-      const appointmentDateTime = moment(appointment.appointmentDate)
-        .set('hour', parseInt(appointment.appointmentTime.split(':')[0]))
-        .set('minute', parseInt(appointment.appointmentTime.split(':')[1]));
-
-      return {
-        id: appointment._id,
-        title: `${appointment.user.name} - ${appointment.service.name}`,
-        start: new Date(appointmentDateTime),
-        end: moment(appointmentDateTime).add(1, 'hour').toDate(), // Assuming 1 hour duration
-      };
-    });
+  const dispatch = useDispatch<any>();
 
   const handleConfirmAppointment = async (appointmentId: string) => {
-    setLoadingConfirm(true);
     try {
-      const response = await axios.put(
-        `/api/appointments/${appointmentId}/confirm`
-      );
-      // Optionally update local state or fetch updated appointments
-      // fetchAppointments();
+      await dispatch(confirmAppointmentAction(appointmentId));
     } catch (error) {
-      setErrorConfirm('Failed to confirm appointment');
       console.error('Error confirming appointment:', error);
-    } finally {
-      setLoadingConfirm(false);
     }
   };
 
@@ -53,13 +36,35 @@ const DashboardUi: React.FC<AppointmentData> = ({
       }}
     >
       <div>{event.title}</div>
-      {!event.confirmed && (
-        <button onClick={() => handleConfirmAppointment(event.id)}>
-          Confirm
+      {event.confirmed ? (
+        <div className="bg-green-500 rounded-md p-1 text-white">התור מאושר</div>
+      ) : (
+        <button
+          className="bg-red-500 rounded-md p-1 text-white"
+          onClick={() => handleConfirmAppointment(event.id)}
+        >
+          אשר תור
         </button>
       )}
     </div>
   );
+
+  const formattedAppointments =
+    appointments?.length > 0 &&
+    appointments.map((appointment) => {
+      // Format appointmentTime to match "HH:mm" format
+      const appointmentDateTime = moment(appointment.appointmentDate)
+        .set('hour', parseInt(appointment.appointmentTime.split(':')[0]))
+        .set('minute', parseInt(appointment.appointmentTime.split(':')[1]));
+
+      return {
+        id: appointment._id,
+        title: `${appointment.user.name} - ${appointment.service.name}`,
+        start: new Date(appointmentDateTime),
+        end: moment(appointmentDateTime).add(1, 'hour').toDate(),
+        confirmed: appointment.confirmed, // Assuming 1 hour duration
+      };
+    });
 
   return (
     <div>

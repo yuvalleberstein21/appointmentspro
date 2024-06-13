@@ -11,6 +11,7 @@ import {
 } from './Reducers/BusinessReducer';
 import {
   businessAppointmentReducer,
+  confirmAppointmentReducer,
   createAppointmentReducer,
   dashboardAppointmentReducer,
   deleteAppointmentReducer,
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   userAppointment: userAppointmentReducer,
   deleteAppointment: deleteAppointmentReducer,
   dashboardAppointments: dashboardAppointmentReducer,
+  confirmAppointments: confirmAppointmentReducer,
 });
 
 const userInfoFromLocalStorage = localStorage.getItem('userInfo')

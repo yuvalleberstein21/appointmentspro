@@ -1,9 +1,13 @@
 import {
+  CONFIRM_APPOINTMENT_FAIL,
+  CONFIRM_APPOINTMENT_REQUEST,
+  CONFIRM_APPOINTMENT_SUCCESS,
   CREATE_APPOINTMENT_FAIL,
   CREATE_APPOINTMENT_REQUEST,
   CREATE_APPOINTMENT_SUCCESS,
   DASHBOARD_APPOINTMENT_FAIL,
   DASHBOARD_APPOINTMENT_REQUEST,
+  DASHBOARD_APPOINTMENT_RESET,
   DASHBOARD_APPOINTMENT_SUCCESS,
   DELETE_APPOINTMENT_FAIL,
   DELETE_APPOINTMENT_REQUEST,
@@ -71,13 +75,28 @@ export const deleteAppointmentReducer = (state = {}, action: any) => {
   }
 };
 
-export const dashboardAppointmentReducer = (state = {}, action: any) => {
+export const dashboardAppointmentReducer = (state = [], action: any) => {
   switch (action.type) {
     case DASHBOARD_APPOINTMENT_REQUEST:
       return { loading: true };
     case DASHBOARD_APPOINTMENT_SUCCESS:
       return { loading: false, appointments: action.payload };
     case DASHBOARD_APPOINTMENT_FAIL:
+      return { loading: false, error: action.payload };
+    case DASHBOARD_APPOINTMENT_RESET:
+      return { appointments: [] };
+    default:
+      return state;
+  }
+};
+
+export const confirmAppointmentReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case CONFIRM_APPOINTMENT_REQUEST:
+      return { loading: true };
+    case CONFIRM_APPOINTMENT_SUCCESS:
+      return { loading: false, appointments: action.payload };
+    case CONFIRM_APPOINTMENT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

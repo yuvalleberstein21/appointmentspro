@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  CONFIRM_APPOINTMENT_FAIL,
+  CONFIRM_APPOINTMENT_REQUEST,
+  CONFIRM_APPOINTMENT_SUCCESS,
   CREATE_APPOINTMENT_FAIL,
   CREATE_APPOINTMENT_REQUEST,
   CREATE_APPOINTMENT_SUCCESS,
@@ -227,6 +230,54 @@ export const dashboardAppointmentAction =
     } catch (error: any) {
       dispatch({
         type: DASHBOARD_APPOINTMENT_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+      throw new Error(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+    }
+  };
+
+export const confirmAppointmentAction =
+  (appointmentId: string | undefined) =>
+  async (dispatch: any, getState: any) => {
+    try {
+      dispatch({ type: CONFIRM_APPOINTMENT_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      if (!userInfo || !userInfo.token) {
+        throw new Error('User not authenticated');
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/appointment/confirmAppointment/${appointmentId}`,
+        {}, // This is the body of the request, empty in this case
+        config
+      );
+
+      dispatch({
+        type: CONFIRM_APPOINTMENT_SUCCESS,
+        payload: data,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: CONFIRM_APPOINTMENT_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

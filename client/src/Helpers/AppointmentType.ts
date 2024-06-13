@@ -10,4 +10,5 @@ export interface AppointmentData {
   user: string;
   appointments: AppointmentData[];
   loading: boolean;
+  confirmed: boolean;
 }
