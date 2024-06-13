@@ -8,6 +8,7 @@ import SingleBusinessPage from './pages/SingleBusinessPage';
 import CreateBusiness from './pages/CreateBusiness';
 import ProtectedRoute from './Utils/ProtectedRoute';
 import EditBusinessPage from './pages/EditBusinessPage';
+import AppointmentDashboard from './pages/AppointmentDashboard';
 
 function App() {
   return (
@@ -36,7 +37,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
+            <Route
+              path="/appointmentDashboard"
+              element={
+                <ProtectedRoute>
+                  <AppointmentDashboard />
+                </ProtectedRoute>
+              }
+            />
             {/* <Route path="/homepage" element={<HomeScreen />} />
             <Route path="/business/:id" element={<SingleBusiness />} />
             <Route

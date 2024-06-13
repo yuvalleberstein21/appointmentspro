@@ -8,6 +8,7 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
 } from '../Constants/AuthConstant';
+import { GET_USER_APPOINTMENT_RESET } from '../Constants/AppointmentConstant';
 
 // LOGIN ACTION
 export const login =
@@ -49,6 +50,7 @@ export const login =
 export const logout = () => (dispatch: any) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: GET_USER_APPOINTMENT_RESET });
 };
 
 // SIGN UP ACTION

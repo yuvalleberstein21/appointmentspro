@@ -2,6 +2,9 @@ import {
   CREATE_APPOINTMENT_FAIL,
   CREATE_APPOINTMENT_REQUEST,
   CREATE_APPOINTMENT_SUCCESS,
+  DASHBOARD_APPOINTMENT_FAIL,
+  DASHBOARD_APPOINTMENT_REQUEST,
+  DASHBOARD_APPOINTMENT_SUCCESS,
   DELETE_APPOINTMENT_FAIL,
   DELETE_APPOINTMENT_REQUEST,
   DELETE_APPOINTMENT_SUCCESS,
@@ -10,6 +13,7 @@ import {
   GET_BUSINESS_APPOINTMENT_SUCCESS,
   GET_USER_APPOINTMENT_FAIL,
   GET_USER_APPOINTMENT_REQUEST,
+  GET_USER_APPOINTMENT_RESET,
   GET_USER_APPOINTMENT_SUCCESS,
 } from '../Constants/AppointmentConstant';
 
@@ -47,6 +51,8 @@ export const userAppointmentReducer = (state = {}, action: any) => {
       return { loading: false, appointment: action.payload };
     case GET_USER_APPOINTMENT_FAIL:
       return { loading: false, error: action.payload };
+    case GET_USER_APPOINTMENT_RESET:
+      return { appointment: {} };
     default:
       return state;
   }
@@ -59,6 +65,19 @@ export const deleteAppointmentReducer = (state = {}, action: any) => {
     case DELETE_APPOINTMENT_SUCCESS:
       return { loading: false, success: true, appointment: {} };
     case DELETE_APPOINTMENT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const dashboardAppointmentReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case DASHBOARD_APPOINTMENT_REQUEST:
+      return { loading: true };
+    case DASHBOARD_APPOINTMENT_SUCCESS:
+      return { loading: false, appointments: action.payload };
+    case DASHBOARD_APPOINTMENT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

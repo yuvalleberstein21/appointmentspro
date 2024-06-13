@@ -123,4 +123,43 @@ const deleteAppointment = async (req, res) => {
     }
 };
 
-module.exports = { createAppointment, getBusinessAppointment, getUserAppointment, deleteAppointment };
+const dashboardAppointments = async (req, res) => {
+    const userId = req.user._id;
+    const businessId = req.params.businessId;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Find the business by ID
+        const business = await Business.findById(businessId);
+        if (!business) {
+            return res.status(404).json({ error: 'Business not found' });
+        }
+
+        // Check if the user is the owner of the business
+        if (String(business.owner) !== String(userId)) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+        // Find the appointments for the specified business
+        const appointments = await Appointment.find({ business: businessId })
+            .populate('user', 'name phoneNumber')
+            .populate('business', 'name')
+            .populate('service', 'name');
+
+        if (appointments.length === 0) {
+            return res.status(200).json({ message: 'No appointments found', appointments: [] });
+        }
+
+        return res.status(200).json(appointments);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while creating the appointment' });
+    }
+};
+
+
+module.exports = { createAppointment, getBusinessAppointment, getUserAppointment, deleteAppointment, dashboardAppointments };
