@@ -27,13 +27,13 @@ const SingleBusinessHeader: React.FC<BusinessData> = ({ business }) => {
 
   return (
     <Fragment>
-      <div className="flex flex-col md:flex-row md:gap-4">
+      <div className="flex flex-col md:flex-row mx-auto md:gap-4">
         <div
-          className="md:basis-3/5 p-4 mx-auto text-center"
+          className="md:basis-2/4 p-4 mx-auto text-center"
           key={business?._id}
         >
           <div className="relative flex flex-col text-gray-700 bg-slate-100 shadow-md bg-clip-border rounded-xl w-full">
-            <div className="relative  mt-4 overflow-hidden  text-gray-700 bg-slate-100 shadow-lg bg-clip-border rounded-b-3xl mx-10 h-80">
+            <div className="relative mt-4 overflow-hidden text-gray-700 bg-slate-100 shadow-lg bg-clip-border rounded-b-3xl mx-10 h-80">
               <img
                 src={business?.images[0]}
                 alt={business?.name}

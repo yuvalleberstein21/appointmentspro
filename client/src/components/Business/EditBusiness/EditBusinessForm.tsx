@@ -58,78 +58,83 @@ const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
     }
   }, [selectedBusiness]);
 
-  const handleChange = (e: any, index: number | null, type: string | null) => {
-    const { name, value } = e.target;
-    if (type === 'services') {
-      const services = [...formData.services];
-      services[index][name] = value;
-      setFormData({ ...formData, services });
-    } else if (type === 'workingDays') {
-      const workingDays = [...formData.workingDays];
-      workingDays[index][name] = value;
-      setFormData({ ...formData, workingDays });
-    } else if (type === 'images') {
-      const images = [...formData.images];
-      images[index] = value;
-      setFormData({ ...formData, images });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleAddField = (type: string) => {
-    if (type === 'services') {
-      setFormData({
-        ...formData,
-        services: [
-          ...formData.services,
-          { _id: '', name: '', price: '', serviceTime: '' },
-        ],
-      });
-    } else if (type === 'workingDays') {
-      setFormData({
-        ...formData,
-        workingDays: [
-          ...formData.workingDays,
-          { day: '', startHour: '', endHour: '' },
-        ],
-      });
-    } else if (type === 'images') {
-      setFormData({
-        ...formData,
-        images: [...formData.images, ''],
-      });
-    }
-  };
-
-  const handleRemoveField = (index: number, type: string) => {
-    if (type === 'services') {
-      const services = [...formData.services];
-      services.splice(index, 1);
-      setFormData({ ...formData, services });
-    } else if (type === 'workingDays') {
-      const workingDays = [...formData.workingDays];
-      workingDays.splice(index, 1);
-      setFormData({ ...formData, workingDays });
-    } else if (type === 'images') {
-      const images = [...formData.images];
-      images.splice(index, 1);
-      setFormData({ ...formData, images });
-    }
-  };
-
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      const businessId = selectedBusiness._id;
-      try {
-        dispatch(editBusinesessAction(businessId, formData));
-      } catch (error: any) {
-        setErrorEditBusiness(error.message);
+  const handleChange = useCallback(
+    (e: any, index: number | null, type: string | null) => {
+      const { name, value } = e.target;
+      if (type === 'services') {
+        const services = [...formData.services];
+        services[index][name] = value;
+        setFormData({ ...formData, services });
+      } else if (type === 'workingDays') {
+        const workingDays = [...formData.workingDays];
+        workingDays[index][name] = value;
+        setFormData({ ...formData, workingDays });
+      } else if (type === 'images') {
+        const images = [...formData.images];
+        images[index] = value;
+        setFormData({ ...formData, images });
+      } else {
+        setFormData({ ...formData, [name]: value });
       }
     },
-    [dispatch, formData, selectedBusiness]
+    [formData]
   );
+
+  const handleAddField = useCallback(
+    (type: string) => {
+      if (type === 'services') {
+        setFormData({
+          ...formData,
+          services: [
+            ...formData.services,
+            { _id: '', name: '', price: '', serviceTime: '' },
+          ],
+        });
+      } else if (type === 'workingDays') {
+        setFormData({
+          ...formData,
+          workingDays: [
+            ...formData.workingDays,
+            { day: '', startHour: '', endHour: '' },
+          ],
+        });
+      } else if (type === 'images') {
+        setFormData({
+          ...formData,
+          images: [...formData.images, ''],
+        });
+      }
+    },
+    [formData]
+  );
+  const handleRemoveField = useCallback(
+    (index: number, type: string) => {
+      if (type === 'services') {
+        const services = [...formData.services];
+        services.splice(index, 1);
+        setFormData({ ...formData, services });
+      } else if (type === 'workingDays') {
+        const workingDays = [...formData.workingDays];
+        workingDays.splice(index, 1);
+        setFormData({ ...formData, workingDays });
+      } else if (type === 'images') {
+        const images = [...formData.images];
+        images.splice(index, 1);
+        setFormData({ ...formData, images });
+      }
+    },
+    [formData]
+  );
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const businessId = selectedBusiness._id;
+    try {
+      dispatch(editBusinesessAction(businessId, formData));
+    } catch (error: any) {
+      setErrorEditBusiness(error.message);
+    }
+  };
 
   const handleDeleteBusiness = useCallback(
     (e: React.FormEvent) => {
@@ -177,6 +182,7 @@ const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
     <>
       {selectedBusiness && (
         <form
+          onSubmit={handleSubmit}
           className="max-w-xl mx-auto p-4 bg-slate-100 shadow-md rounded-lg mt-5"
           dir="rtl"
         >
@@ -232,7 +238,6 @@ const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
             </button>
             <button
               type="submit"
-              onSubmit={handleSubmit}
               className="bg-green-500 p-2 text-white rounded-md text-sm mt-4 w-full"
             >
               עדכן פרטי העסק
