@@ -9,6 +9,8 @@ import {
   dashboardAppointmentAction,
 } from '../../Redux/Actions/AppointmentAction';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import EditAppointmentModal from './EditAppointmentModal';
 
 const localizer = momentLocalizer(moment);
 const DashboardUi: React.FC<AppointmentData> = ({
@@ -18,12 +20,20 @@ const DashboardUi: React.FC<AppointmentData> = ({
 }) => {
   const dispatch = useDispatch<any>();
 
+  const [openModal, setOpenModal] = useState(false);
+  const [appointmentDate, setAppointmentDate] = useState('');
+  const [appointmentTime, setAppointmentTime] = useState('');
+
   const handleConfirmAppointment = async (appointmentId: string) => {
     try {
       await dispatch(confirmAppointmentAction(appointmentId));
     } catch (error) {
       console.error('Error confirming appointment:', error);
     }
+  };
+
+  const openEditAppointmentModal = () => {
+    setOpenModal((prev) => !openModal);
   };
 
   // Custom agenda event component with confirm button
@@ -37,7 +47,7 @@ const DashboardUi: React.FC<AppointmentData> = ({
     >
       <div>{event.title}</div>
       {event.confirmed ? (
-        <div className="bg-green-500 rounded-md p-1 text-white">התור מאושר</div>
+        <div className="bg-blue-500 rounded-md p-1 text-white">התור מאושר</div>
       ) : (
         <button
           className="bg-red-500 rounded-md p-1 text-white"
@@ -46,6 +56,12 @@ const DashboardUi: React.FC<AppointmentData> = ({
           אשר תור
         </button>
       )}
+      <button
+        className="bg-green-500 rounded-md p-1 text-white"
+        onClick={openEditAppointmentModal}
+      >
+        ערוך תור
+      </button>
     </div>
   );
 
@@ -71,11 +87,11 @@ const DashboardUi: React.FC<AppointmentData> = ({
       {loading ? (
         <Loading />
       ) : error ? (
-        <div>{error}</div> // Handle error message display in Hebrew
+        <div>{error}</div>
       ) : (
         <Calendar
           localizer={localizer}
-          events={formattedAppointments || []} // Provide empty array if formattedAppointments is undefined
+          events={formattedAppointments || []}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}
@@ -88,14 +104,16 @@ const DashboardUi: React.FC<AppointmentData> = ({
             day: 'יום',
             showMore: (total) => `+ ${total} עוד`,
           }}
-          views={['month', 'week', 'day', 'agenda']} // Specify views including agenda
+          views={['month', 'week', 'day', 'agenda']}
           components={{
             agenda: {
-              event: AgendaEvent, // Use custom event component for agenda view
+              event: AgendaEvent,
             },
           }}
         />
       )}
+
+      <EditAppointmentModal openModal={openModal} />
     </div>
   );
 };
