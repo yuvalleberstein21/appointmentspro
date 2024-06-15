@@ -17,18 +17,21 @@ const ServiceInput: React.FC<{
     {services.map((service, index) => (
       <div key={index}>
         <TextInput
+          type="text"
           label="שם השירות"
           name="name"
           value={service.name}
           onChange={(e) => handleChange(e, index, 'services')}
         />
         <TextInput
+          type="text"
           label="מחיר השירות"
           name="price"
           value={service.price}
           onChange={(e) => handleChange(e, index, 'services')}
         />
         <TextInput
+          type="text"
           label="זמן השירות"
           name="serviceTime"
           value={service.serviceTime}

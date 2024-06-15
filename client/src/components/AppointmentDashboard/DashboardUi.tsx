@@ -3,11 +3,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { AppointmentData } from '../../Helpers/AppointmentType';
 import Loading from '../../Utils/Loading';
-import axios from 'axios';
-import {
-  confirmAppointmentAction,
-  dashboardAppointmentAction,
-} from '../../Redux/Actions/AppointmentAction';
+import { confirmAppointmentAction } from '../../Redux/Actions/AppointmentAction';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import EditAppointmentModal from './EditAppointmentModal';

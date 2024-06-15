@@ -17,19 +17,37 @@ const WorkingDaysInputs: React.FC<{
     </label>
     {workingDays.map((day, index) => (
       <div key={index}>
-        <TextInput
+        <select
+          className="w-full p-2 border-1 border-gray-300 rounded-md mb-2"
+          name="day"
+          value={day.day}
+          onChange={(e) => handleChange(e, index, 'workingDays')}
+          required
+        >
+          {/* <option value={day.day}>--</option> */}
+          <option value="sunday">ראשון</option>
+          <option value="monday">שני</option>
+          <option value="tuesday">שלישי</option>
+          <option value="wednesday">רביעי</option>
+          <option value="thursday">חמישי</option>
+          <option value="friday">שישי</option>
+          <option value="saturday">שבת</option>
+        </select>
+        {/* <TextInput
           label="יום"
           name="day"
           value={day.day}
           onChange={(e) => handleChange(e, index, 'workingDays')}
-        />
+        /> */}
         <TextInput
+          type="time"
           label="תחילת יום עבודה"
           name="startHour"
           value={day.startHour}
           onChange={(e) => handleChange(e, index, 'workingDays')}
         />
         <TextInput
+          type="time"
           label="סיום יום עבודה"
           name="endHour"
           value={day.endHour}

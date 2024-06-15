@@ -189,12 +189,14 @@ const EditBusinessForm: React.FC<EditBusinessFormProps> = ({
           {errorEditBusiness && <div>{errorEditBusiness}</div>}
 
           <TextInput
+            type="text"
             label="שם העסק"
             name="name"
             value={formData.name}
             onChange={(e: Event) => handleChange(e, null, null)}
           />
           <TextInput
+            type="text"
             label="עיר"
             name="city"
             value={formData.city}

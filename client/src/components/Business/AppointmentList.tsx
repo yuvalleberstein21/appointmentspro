@@ -2,18 +2,22 @@ import { AppointmentData } from '../../Helpers/AppointmentType';
 import { formatDate } from '../../Utils/FormatDate';
 import { motion } from 'framer-motion';
 import Loading from '../../Utils/Loading';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   deleteAppointmentAction,
   userAppointmentAction,
 } from '../../Redux/Actions/AppointmentAction';
-
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const AppointmentList: React.FC<AppointmentData> = ({
   appointments,
   loading,
 }) => {
+  const [filteredAppointments, setFilteredAppointments] = useState<
+    AppointmentData[]
+  >([]);
+
   const dispatch = useDispatch<any>();
   const businessId = useParams();
 
@@ -25,8 +29,26 @@ const AppointmentList: React.FC<AppointmentData> = ({
       console.log(error);
     }
   };
+  const checkAppointmentActive = () => {
+    const dayNow = new Date();
+    const activeAppointments = appointments?.filter(
+      (appointment: AppointmentData) => {
+        const appointmentDateTime = new Date(appointment.appointmentDate);
+        const [hours, minutes] = appointment.appointmentTime.split(':');
 
-  console.log(appointments);
+        appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+        return appointmentDateTime > dayNow;
+      }
+    );
+
+    setFilteredAppointments(activeAppointments);
+  };
+
+  useEffect(() => {
+    checkAppointmentActive();
+  }, [appointments]);
+
   return (
     <>
       {loading ? (
@@ -37,8 +59,8 @@ const AppointmentList: React.FC<AppointmentData> = ({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7 }}
         >
-          {appointments?.length > 0 &&
-            appointments.map((appointment: AppointmentData) => (
+          {filteredAppointments?.length > 0 &&
+            filteredAppointments.map((appointment: AppointmentData) => (
               <div
                 className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-5"
                 key={appointment._id}
