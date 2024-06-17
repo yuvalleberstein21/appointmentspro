@@ -31,17 +31,23 @@ const AppointmentList: React.FC<AppointmentData> = ({
   };
   const checkAppointmentActive = () => {
     const dayNow = new Date();
-    const activeAppointments = appointments?.filter(
-      (appointment: AppointmentData) => {
+
+    // Check if appointment is defined and is an array
+    if (appointments && Array.isArray(appointments)) {
+      const activeAppointments = appointments.filter((appointment) => {
         const appointmentDateTime = new Date(appointment.appointmentDate);
         const [hours, minutes] = appointment.appointmentTime.split(':');
 
         appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
         return appointmentDateTime > dayNow;
-      }
-    );
-    setFilteredAppointments(activeAppointments);
+      });
+
+      setFilteredAppointments(activeAppointments);
+    } else {
+      // Handle case where appointment is undefined or not an array
+      setFilteredAppointments([]); // or setFilteredAppointments(null) based on your requirement
+    }
   };
 
   useEffect(() => {

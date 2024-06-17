@@ -2,7 +2,7 @@ const Loading = () => {
   return (
     <div className="d-flex justify-content-center">
       <div className="loading-state">
-        <div className="loading"></div>
+        <span className="loading"></span>
       </div>
     </div>
   );

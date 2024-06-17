@@ -15,6 +15,7 @@ import {
   createAppointmentReducer,
   dashboardAppointmentReducer,
   deleteAppointmentReducer,
+  updateAppointmentReducer,
   userAppointmentReducer,
 } from './Reducers/AppointmentReducer';
 
@@ -33,6 +34,7 @@ const reducer = combineReducers({
   deleteAppointment: deleteAppointmentReducer,
   dashboardAppointments: dashboardAppointmentReducer,
   confirmAppointments: confirmAppointmentReducer,
+  updateAppointment: updateAppointmentReducer,
 });
 
 const userInfoFromLocalStorage = localStorage.getItem('userInfo')

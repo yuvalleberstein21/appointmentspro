@@ -19,6 +19,9 @@ import {
   GET_USER_APPOINTMENT_REQUEST,
   GET_USER_APPOINTMENT_RESET,
   GET_USER_APPOINTMENT_SUCCESS,
+  UPDATE_APPOINTMENT_FAIL,
+  UPDATE_APPOINTMENT_REQUEST,
+  UPDATE_APPOINTMENT_SUCCESS,
 } from '../Constants/AppointmentConstant';
 
 export const createAppointmentReducer = (state = {}, action: any) => {
@@ -97,6 +100,19 @@ export const confirmAppointmentReducer = (state = {}, action: any) => {
     case CONFIRM_APPOINTMENT_SUCCESS:
       return { loading: false, appointments: action.payload };
     case CONFIRM_APPOINTMENT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateAppointmentReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case UPDATE_APPOINTMENT_REQUEST:
+      return { loading: true };
+    case UPDATE_APPOINTMENT_SUCCESS:
+      return { loading: false, success: true, appointment: action.payload };
+    case UPDATE_APPOINTMENT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

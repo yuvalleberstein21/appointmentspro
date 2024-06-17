@@ -9,8 +9,6 @@ const EditAppointmentModal = ({ openModal, appointment, onSave, onClose }) => {
     time: '',
   });
 
-  console.log(appointment);
-
   useEffect(() => {
     if (appointment) {
       setFormData({

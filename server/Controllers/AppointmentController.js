@@ -187,6 +187,45 @@ const confirmAppointment = async (req, res) => {
     }
 };
 
+const updateAppointment = async (req, res) => {
+    const userId = req.user._id;
+    const appointmentId = req.params.appointmentId;
+    const { date, time } = req.body;
+
+    try {
+        // Validate user
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Find the appointment
+        const appointment = await Appointment.findById(appointmentId);
+        if (!appointment) {
+            return res.status(404).json({ error: 'Appointment not found' });
+        }
+        // Check if the user is the owner of the business
+        if (String(appointment.user) !== String(userId)) {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+        // Update the appointment's date and time
+        appointment.appointmentDate = new Date(date);
+        appointment.appointmentTime = time;
+
+        // Save the updated appointment
+        const updatedAppointment = await appointment.save();
+
+        // Respond with the updated appointment
+        res.status(200).json(updatedAppointment);
+    } catch (error) {
+        console.error('Error updating appointment:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+
+
+};
+
+
 
 
 module.exports = {
@@ -195,5 +234,6 @@ module.exports = {
     getUserAppointment,
     deleteAppointment,
     dashboardAppointments,
-    confirmAppointment
+    confirmAppointment,
+    updateAppointment
 };

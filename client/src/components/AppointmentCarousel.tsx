@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../Utils/FormatDate';
 import { AppointmentData } from '../Helpers/AppointmentType';
 import { useEffect, useState } from 'react';
+import { userAppointmentAction } from '../Redux/Actions/AppointmentAction';
 
 const AppointmentCarousel = () => {
   const userAppointment = useSelector((state: any) => state.userAppointment);
@@ -14,21 +15,29 @@ const AppointmentCarousel = () => {
 
   const checkAppointmentActive = () => {
     const dayNow = new Date();
-    const activeAppointments = appointment?.filter(
-      (appointment: AppointmentData) => {
+
+    // Check if appointment is defined and is an array
+    if (appointment && Array.isArray(appointment)) {
+      const activeAppointments = appointment.filter((appointment) => {
         const appointmentDateTime = new Date(appointment.appointmentDate);
         const [hours, minutes] = appointment.appointmentTime.split(':');
 
         appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
         return appointmentDateTime > dayNow;
-      }
-    );
-    setFilteredAppointments(activeAppointments);
+      });
+
+      setFilteredAppointments(activeAppointments);
+    } else {
+      // Handle case where appointment is undefined or not an array
+      setFilteredAppointments([]); // or setFilteredAppointments(null) based on your requirement
+    }
   };
 
   useEffect(() => {
-    checkAppointmentActive();
+    if (appointment) {
+      checkAppointmentActive();
+    }
   }, [appointment]);
 
   return (

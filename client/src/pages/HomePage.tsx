@@ -12,7 +12,11 @@ const HomePage = () => {
 
   const dispacth = useDispatch<any>();
   useEffect(() => {
-    dispacth(userAppointmentAction());
+    try {
+      dispacth(userAppointmentAction());
+    } catch (error) {
+      console.log(error);
+    }
   }, [dispacth]);
 
   return (

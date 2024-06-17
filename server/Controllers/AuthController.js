@@ -29,7 +29,7 @@ const register = async (req, res) => {
     const userExists = await User.findOne({ phoneNumber });
 
     if (userExists) {
-        return res.status(401).send({ message: 'User already exists' });
+        return res.status(401).send({ message: 'מתשמש קיים נסה שנית' });
     }
     const user = await User.create({
         name,

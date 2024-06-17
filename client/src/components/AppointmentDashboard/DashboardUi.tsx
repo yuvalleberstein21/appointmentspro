@@ -3,17 +3,31 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { AppointmentData } from '../../Helpers/AppointmentType';
 import Loading from '../../Utils/Loading';
-import { confirmAppointmentAction } from '../../Redux/Actions/AppointmentAction';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import {
+  confirmAppointmentAction,
+  updateAppointmentAction,
+} from '../../Redux/Actions/AppointmentAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import EditAppointmentModal from './EditAppointmentModal';
 
 const localizer = momentLocalizer(moment);
 const DashboardUi: React.FC<AppointmentData> = ({
   loading,
+
   error,
   appointments,
 }) => {
+  const updateAppointment = useSelector(
+    (state: any) => state.updateAppointment
+  );
+  const {
+    loading: loadingUpdate,
+    success,
+    appointment,
+    error: errorUpdate,
+  } = updateAppointment;
+
   const dispatch = useDispatch<any>();
 
   const [openModal, setOpenModal] = useState(false);
@@ -61,16 +75,25 @@ const DashboardUi: React.FC<AppointmentData> = ({
     </div>
   );
 
-  const handleSaveAppointment = async (updatedAppointment) => {
+  const handleSaveAppointment = async (updatedAppointment: any) => {
+    const appointmentId = updatedAppointment.id;
+    const date = new Date(updatedAppointment.start);
+    const time = updatedAppointment.time;
     try {
-      // await dispatch(updateAppointmentAction(updatedAppointment));
-      console.log(updatedAppointment);
-      setOpenModal(false);
-      setSelectedAppointment(null);
+      await dispatch(updateAppointmentAction(appointmentId, date, time));
     } catch (error) {
       console.error('Error updating appointment:', error);
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      alert('Appointment updated successfully');
+      setOpenModal(false);
+      setSelectedAppointment(null);
+    }
+  }, [success]);
+
   const formattedAppointments =
     appointments?.length > 0 &&
     appointments.map((appointment) => {
@@ -92,7 +115,7 @@ const DashboardUi: React.FC<AppointmentData> = ({
     <div>
       {loading ? (
         <Loading />
-      ) : error ? (
+      ) : error || errorUpdate ? (
         <div>{error}</div>
       ) : (
         <Calendar

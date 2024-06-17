@@ -32,7 +32,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ userInfo, loading, error }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const action = login(phoneNumber, password);
       await dispatch(action);

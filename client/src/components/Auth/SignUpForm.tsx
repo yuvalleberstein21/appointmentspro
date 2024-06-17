@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../../Redux/Actions/AuthAction';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -17,6 +17,7 @@ const SignUpForm: React.FC<RegisterFormProps> = ({ userInfo, loading }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const dispatch = useDispatch<any>();
 
@@ -27,7 +28,7 @@ const SignUpForm: React.FC<RegisterFormProps> = ({ userInfo, loading }) => {
       await dispatch(action);
       if (userInfo) {
         toast.success('!ההרשמה בוצעה בהצלחה');
-        // navigate('/homepage');
+        navigate('/home');
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -76,6 +77,7 @@ const SignUpForm: React.FC<RegisterFormProps> = ({ userInfo, loading }) => {
                 סיסמא
               </label>
               <input
+                dir="ltr"
                 autoComplete="off"
                 id="password"
                 name="password"
