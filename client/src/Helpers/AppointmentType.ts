@@ -11,4 +11,5 @@ export interface AppointmentData {
   appointments: AppointmentData[];
   loading: boolean;
   confirmed: boolean;
+  openModal: boolean;
 }

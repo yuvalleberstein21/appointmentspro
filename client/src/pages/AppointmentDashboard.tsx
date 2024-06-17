@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import DashboardUi from '../components/AppointmentDashboard/DashboardUi';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { dashboardAppointmentAction } from '../Redux/Actions/AppointmentAction';
 import { userBusinesessAction } from '../Redux/Actions/BusinessAction';
 import { Business } from '../Helpers/BusinessType';
@@ -28,7 +28,6 @@ const AppointmentDashboard = () => {
   }, [dispatch]);
 
   const handleBusinessAppointments = (businessId: string | undefined) => {
-    // setSelectedBusinessId(businessId);
     try {
       dispatch(dashboardAppointmentAction(businessId));
     } catch (error) {
@@ -44,8 +43,8 @@ const AppointmentDashboard = () => {
         ) : errorBusiness ? (
           <div>{error}</div>
         ) : (
-          <>
-            <h1>בחר את העסק המבוקש</h1>
+          <div className="mt-5 mx-auto p-3">
+            <h1 className="text-center mb-2">בחר את העסק המבוקש</h1>
             {business?.length > 0 &&
               business.map((b: Business) => (
                 <div
@@ -60,7 +59,7 @@ const AppointmentDashboard = () => {
                   </div>
                 </div>
               ))}
-          </>
+          </div>
         )}
       </div>
       <div className="mx-5 p-3">

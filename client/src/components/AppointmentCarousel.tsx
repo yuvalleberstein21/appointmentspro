@@ -3,10 +3,33 @@ import Loading from '../Utils/Loading';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../Utils/FormatDate';
 import { AppointmentData } from '../Helpers/AppointmentType';
+import { useEffect, useState } from 'react';
 
 const AppointmentCarousel = () => {
   const userAppointment = useSelector((state: any) => state.userAppointment);
   const { loading, appointment } = userAppointment;
+  const [filteredAppointments, setFilteredAppointments] = useState<
+    AppointmentData[]
+  >([]);
+
+  const checkAppointmentActive = () => {
+    const dayNow = new Date();
+    const activeAppointments = appointment?.filter(
+      (appointment: AppointmentData) => {
+        const appointmentDateTime = new Date(appointment.appointmentDate);
+        const [hours, minutes] = appointment.appointmentTime.split(':');
+
+        appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+        return appointmentDateTime > dayNow;
+      }
+    );
+    setFilteredAppointments(activeAppointments);
+  };
+
+  useEffect(() => {
+    checkAppointmentActive();
+  }, [appointment]);
 
   return (
     <div
@@ -16,8 +39,8 @@ const AppointmentCarousel = () => {
       {loading ? (
         <Loading />
       ) : (
-        appointment?.length > 0 &&
-        appointment.map((appointment: AppointmentData) => (
+        filteredAppointments?.length > 0 &&
+        filteredAppointments.map((appointment: AppointmentData) => (
           <Link
             to={`/business/${appointment.business._id}`}
             key={appointment?._id}

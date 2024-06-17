@@ -41,7 +41,6 @@ const AppointmentList: React.FC<AppointmentData> = ({
         return appointmentDateTime > dayNow;
       }
     );
-
     setFilteredAppointments(activeAppointments);
   };
 

@@ -17,8 +17,7 @@ const DashboardUi: React.FC<AppointmentData> = ({
   const dispatch = useDispatch<any>();
 
   const [openModal, setOpenModal] = useState(false);
-  const [appointmentDate, setAppointmentDate] = useState('');
-  const [appointmentTime, setAppointmentTime] = useState('');
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   const handleConfirmAppointment = async (appointmentId: string) => {
     try {
@@ -28,8 +27,9 @@ const DashboardUi: React.FC<AppointmentData> = ({
     }
   };
 
-  const openEditAppointmentModal = () => {
-    setOpenModal((prev) => !openModal);
+  const openEditAppointmentModal = (appointment: any) => {
+    setSelectedAppointment(appointment);
+    setOpenModal(true);
   };
 
   // Custom agenda event component with confirm button
@@ -54,13 +54,23 @@ const DashboardUi: React.FC<AppointmentData> = ({
       )}
       <button
         className="bg-green-500 rounded-md p-1 text-white"
-        onClick={openEditAppointmentModal}
+        onClick={() => openEditAppointmentModal(event)}
       >
         ערוך תור
       </button>
     </div>
   );
 
+  const handleSaveAppointment = async (updatedAppointment) => {
+    try {
+      // await dispatch(updateAppointmentAction(updatedAppointment));
+      console.log(updatedAppointment);
+      setOpenModal(false);
+      setSelectedAppointment(null);
+    } catch (error) {
+      console.error('Error updating appointment:', error);
+    }
+  };
   const formattedAppointments =
     appointments?.length > 0 &&
     appointments.map((appointment) => {
@@ -109,7 +119,12 @@ const DashboardUi: React.FC<AppointmentData> = ({
         />
       )}
 
-      <EditAppointmentModal openModal={openModal} />
+      <EditAppointmentModal
+        openModal={openModal}
+        appointment={selectedAppointment}
+        onSave={handleSaveAppointment}
+        onClose={() => setOpenModal(false)}
+      />
     </div>
   );
 };
