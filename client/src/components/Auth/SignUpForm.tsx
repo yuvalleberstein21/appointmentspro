@@ -104,7 +104,7 @@ const SignUpForm: React.FC<RegisterFormProps> = ({ userInfo, loading }) => {
                 className="bg-blue-500 justify-center items-center text-white rounded-md px-5 py-1"
                 onClick={handleSubmit}
               >
-                Submit
+                הרשם
               </button>
             </div>
           </div>

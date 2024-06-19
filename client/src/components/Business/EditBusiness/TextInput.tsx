@@ -13,6 +13,7 @@ const TextInput: React.FC<{
       value={value}
       className="w-full p-2 border-1 border-gray-300 rounded-md"
       onChange={onChange}
+      required
     />
   </div>
 );

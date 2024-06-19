@@ -1,4 +1,4 @@
-import CreateBusinessForm from '../components/Business/CreateBusinessForm';
+import CreateBusinessForm from '../components/Business/createBusiness/CreateBusinessForm';
 
 const CreateBusiness = () => {
   return <CreateBusinessForm />;

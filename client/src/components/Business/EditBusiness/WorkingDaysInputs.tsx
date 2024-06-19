@@ -33,12 +33,7 @@ const WorkingDaysInputs: React.FC<{
           <option value="friday">שישי</option>
           <option value="saturday">שבת</option>
         </select>
-        {/* <TextInput
-          label="יום"
-          name="day"
-          value={day.day}
-          onChange={(e) => handleChange(e, index, 'workingDays')}
-        /> */}
+
         <TextInput
           type="time"
           label="תחילת יום עבודה"
