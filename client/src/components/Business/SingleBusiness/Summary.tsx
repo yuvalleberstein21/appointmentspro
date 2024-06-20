@@ -1,4 +1,5 @@
 import { HoursProps } from '../../../Helpers/ServiceType';
+import { formatDate } from '../../../Utils/FormatDate';
 
 const Summary: React.FC<HoursProps> = ({
   selectedService,
@@ -18,7 +19,7 @@ const Summary: React.FC<HoursProps> = ({
       <div className="py-2">
         <h4 className="mb-3">תודה שבחרת {business.name}</h4>
         <span className="text-md text-gray-600 text-md">
-          תור ל{selectedService.name} בתאריך {selectedDate.getDate()} בשעה{' '}
+          תור ל{selectedService.name} בתאריך {formatDate(selectedDate)} בשעה{' '}
           {selectedHour}
         </span>
       </div>

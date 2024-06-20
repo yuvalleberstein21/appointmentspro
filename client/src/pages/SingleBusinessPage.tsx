@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getSingleBusinesessAction } from '../Redux/Actions/BusinessAction';
 import SingleBusinessHeader from '../components/Business/SingleBusiness/SingleBusinessHeader';
 import Loading from '../Utils/Loading';
@@ -19,12 +19,17 @@ const SingleBusinessPage = () => {
   const [selectedHour, setSelectedHour] = useState(null);
   const [step, setStep] = useState(1);
 
+  const userLogin = useSelector((state: any) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const getSingleBusiness = useSelector(
     (state: any) => state.getSingleBusiness
   );
   const { loading, error, business } = getSingleBusiness;
 
   const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const businessId = useParams();
 
   useEffect(() => {
@@ -55,6 +60,12 @@ const SingleBusinessPage = () => {
   };
 
   const handleSubmit = async () => {
+    if (!userInfo) {
+      // Store the intended destination path before redirecting to login
+      navigate('/', { state: { from: location.pathname } });
+      return;
+    }
+
     try {
       await dispatch(
         createAppointmentAction(

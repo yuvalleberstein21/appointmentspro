@@ -20,6 +20,7 @@ function App() {
             <Route path="/" element={<AuthPage />} />
             <Route path="/auth/register" element={<AuthPageSignUp />} />
             <Route path="/home" element={<HomePage />} />
+
             <Route path="/business/:id" element={<SingleBusinessPage />} />
             <Route
               path="/createbusiness"
