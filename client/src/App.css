@@ -82,4 +82,11 @@ body {
   pointer-events: none;
 }
 
+@media (max-width: 400px) {
+  .navbar-text,
+  .navbar-button {
+    display: none;
+  }
+}
+
 /* DASHBOARD */
