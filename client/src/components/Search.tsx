@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBusinesessAction } from '../Redux/Actions/BusinessAction';
 import { User } from '../Helpers/AuthType';
-import Loading from '../Utils/Loading';
 import { Link } from 'react-router-dom';
 import { Business } from '../Helpers/BusinessType';
 
@@ -13,7 +12,7 @@ const Search: React.FC<componentData> = ({ userInfo }) => {
   const [inputSearch, setInputSearch] = useState('');
 
   const getAllBusinesess = useSelector((state: any) => state.getAllBusinesess);
-  const { loading, error, businesses } = getAllBusinesess;
+  const { businesses } = getAllBusinesess;
 
   const dispatch = useDispatch<any>();
 
@@ -81,35 +80,36 @@ const Search: React.FC<componentData> = ({ userInfo }) => {
             חיפוש עסק
           </button>
         </div>
-
-        {inputSearch && filterBusinesess?.length > 0
-          ? filterBusinesess.map((b: Business) => (
-              <div
-                className="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto cursor-pointer mt-2"
-                key={b._id}
-              >
-                <ul className="divide-y divide-gray-200">
-                  <Link to={`/business/${b._id}`}>
-                    <li className="flex items-center py-4 px-6">
-                      <img
-                        className="w-12 h-12 rounded-full object-cover mr-4"
-                        src={b.images[0]}
-                        alt={b.name}
-                      />
-                      <div className="flex-1">
-                        <h3 className="text-lg font-medium text-gray-800">
-                          {b.name}
-                        </h3>
-                        <p className="text-gray-500 text-sm">
-                          {b.city + ',' + b.address}
-                        </p>
-                      </div>
-                    </li>
-                  </Link>
-                </ul>
-              </div>
-            ))
-          : null}
+        <div className="max-h-[250px] overflow-y-auto">
+          {inputSearch && filterBusinesess?.length > 0
+            ? filterBusinesess.map((b: Business) => (
+                <div
+                  className="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto cursor-pointer mt-2"
+                  key={b._id}
+                >
+                  <ul className="divide-y divide-gray-200">
+                    <Link to={`/business/${b._id}`}>
+                      <li className="flex items-center py-4 px-6">
+                        <img
+                          className="w-12 h-12 rounded-full object-cover mr-4"
+                          src={b.images[0]}
+                          alt={b.name}
+                        />
+                        <div className="flex-1">
+                          <h3 className="text-lg font-medium text-gray-800">
+                            {b.name}
+                          </h3>
+                          <p className="text-gray-500 text-sm">
+                            {b.city + ',' + b.address}
+                          </p>
+                        </div>
+                      </li>
+                    </Link>
+                  </ul>
+                </div>
+              ))
+            : null}
+        </div>
       </form>
     </div>
   );

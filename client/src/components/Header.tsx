@@ -33,13 +33,13 @@ const Header = () => {
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img src="/logo.webp" className="h-8" alt="EasyMarkLogo" />
-          <span className="self-center lg:text-xl md:text-md text-white font-semibold whitespace-nowrap sm:block">
+          <span className="self-center text-lg text-white font-semibold whitespace-nowrap ">
             EasyMark.
           </span>
         </Link>
         <div className="flex md:order-2 md:space-x-0 rtl:space-x-reverse">
           <span
-            className=" text-white text-md rounded md:bg-transparent md:p-1 mr-4 mt-2 lg:mt-0"
+            className=" text-white rounded md:bg-transparent lg:mt-0 p-2 mr-4"
             aria-current="page"
             dir="rtl"
           >
@@ -65,41 +65,33 @@ const Header = () => {
           )}
           <button
             type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm  rounded-lg md:hidden focus:outline-none text-white"
             aria-controls="navbar-sticky"
             aria-expanded={isMenuOpen}
             onClick={toggleMenu}
           >
             <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
+            {isMenuOpen ? (
+              <i className="fa-solid fa-x fa-lg"></i>
+            ) : (
+              <i className="fa-solid fa-bars fa-lg"></i>
+            )}
           </button>
         </div>
         <div
-          dir="rtl"
           className={`w-full md:flex md:items-center md:justify-between md:w-auto md:order-1 ${
             isMenuOpen ? 'block' : 'hidden'
           }`}
           id="navbar-sticky"
         >
-          <ul className="flex lg:gap-5 md:gap-2 flex-col p-4 md:p-0 mt-2 font-medium rounded-lg bg-cyan-950 md:flex-row md:space-x-8 md:mt-0 md:border-0">
+          <ul
+            dir="rtl"
+            className="flex flex-col lg:gap-5 p-4 md:p-0 sm:gap-4 font-medium rounded-lg bg-cyan-950 md:flex-row md:space-x-8 md:mt-0 md:border-0"
+          >
             <li>
               <Link
                 to={'/home'}
-                className="block py-2 px-3 text-white rounded md:bg-transparent hover:text-emerald-100 md:p-0"
+                className="block py-2 px-3 text-white rounded md:p-0 hover:text-emerald-100"
                 aria-current="page"
               >
                 דף הבית
@@ -109,7 +101,7 @@ const Header = () => {
               <li>
                 <Link
                   to={'/appointmentDashboard'}
-                  className="block py-2 px-3 text-white rounded md:hover:bg-transparent hover:text-emerald-100 md:p-0"
+                  className="block py-2 px-3 text-white rounded hover:text-emerald-100 md:p-0"
                 >
                   ניהול תורים
                 </Link>

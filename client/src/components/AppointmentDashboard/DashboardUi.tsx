@@ -10,14 +10,16 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import EditAppointmentModal from './EditAppointmentModal';
+import { toast } from 'react-toastify';
+import GlobalToast from '../../Utils/Error';
 
 const localizer = momentLocalizer(moment);
 const DashboardUi: React.FC<AppointmentData> = ({
   loading,
-
   error,
   appointments,
 }) => {
+  const [confirmAppointment, setConfirmAppointment] = useState(false);
   const updateAppointment = useSelector(
     (state: any) => state.updateAppointment
   );
@@ -36,6 +38,7 @@ const DashboardUi: React.FC<AppointmentData> = ({
   const handleConfirmAppointment = async (appointmentId: string) => {
     try {
       await dispatch(confirmAppointmentAction(appointmentId));
+      setConfirmAppointment(true);
     } catch (error) {
       console.error('Error confirming appointment:', error);
     }
@@ -56,7 +59,7 @@ const DashboardUi: React.FC<AppointmentData> = ({
       }}
     >
       <div>{event.title}</div>
-      {event.confirmed ? (
+      {event.confirmed || confirmAppointment ? (
         <div className="bg-blue-500 rounded-md p-1 text-white">התור מאושר</div>
       ) : (
         <button
@@ -88,7 +91,7 @@ const DashboardUi: React.FC<AppointmentData> = ({
 
   useEffect(() => {
     if (success) {
-      alert('Appointment updated successfully');
+      toast.success('Appointment updated successfully');
       setOpenModal(false);
       setSelectedAppointment(null);
     }
@@ -97,7 +100,6 @@ const DashboardUi: React.FC<AppointmentData> = ({
   const formattedAppointments =
     appointments?.length > 0 &&
     appointments.map((appointment) => {
-      // Format appointmentTime to match "HH:mm" format
       const appointmentDateTime = moment(appointment.appointmentDate)
         .set('hour', parseInt(appointment.appointmentTime.split(':')[0]))
         .set('minute', parseInt(appointment.appointmentTime.split(':')[1]));
@@ -113,6 +115,7 @@ const DashboardUi: React.FC<AppointmentData> = ({
 
   return (
     <div>
+      <GlobalToast />
       {loading ? (
         <Loading />
       ) : error || errorUpdate ? (
